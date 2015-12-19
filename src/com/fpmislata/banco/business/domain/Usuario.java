@@ -5,23 +5,28 @@
  */
 package com.fpmislata.banco.business.domain;
 
+import java.io.Serializable;
+
+
+
 /**
  *
  * @author German
  */
 
-public class Usuario {
+public class Usuario implements Serializable {
     private int idUsuario;
-    private String name,passwordEncrypt;
+    private String nombre,passwordEncrypt,email;
     private Rol rol;
 
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String name, String passwordEncrypt, Rol rol) {
+    public Usuario(int idUsuario, String nombre, String passwordEncrypt, String email, Rol rol) {
         this.idUsuario = idUsuario;
-        this.name = name;
+        this.nombre = nombre;
         this.passwordEncrypt = passwordEncrypt;
+        this.email = email;
         this.rol = rol;
     }
 
@@ -33,16 +38,12 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    
-    
-    
-
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getPasswordEncrypt() {
@@ -53,6 +54,14 @@ public class Usuario {
         this.passwordEncrypt = passwordEncrypt;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Rol getRol() {
         return rol;
     }
@@ -60,6 +69,8 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+
+    
     
     
     
