@@ -10,5 +10,6 @@
     <context:annotation-config/>
 
     <bean class="com.fpmislata.banco.business.service.impl.EntidadBancariaServiceImpl" />
- 
+    <bean class="com.fpmislata.banco.business.service.impl.UsuarioServiceImpl" />
+    
 </beans>
