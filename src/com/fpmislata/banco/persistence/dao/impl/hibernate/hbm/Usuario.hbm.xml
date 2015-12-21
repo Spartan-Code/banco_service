@@ -4,8 +4,13 @@
     <class name="com.fpmislata.banco.business.domain.Usuario" table="user" >
         <id  name="idUsuario" />
         <property  name="nombre" />
-        <property column="password" name="passwordEncrypt" />
+        <property column="password" name="passwordEncrypt" update="false" />
         <property name="email" />
-        <property name="rol" />
+        <property name="rol">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.fpmislata.banco.business.domain.Rol</param>
+                <param name="type">12</param>
+            </type>
+        </property>
     </class>
 </hibernate-mapping>

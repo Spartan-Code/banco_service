@@ -7,7 +7,9 @@ package com.fpmislata.banco.business.service.impl;
 
 import com.fpmislata.banco.business.domain.Usuario;
 import com.fpmislata.banco.business.service.UsuarioService;
+import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.UsuarioDAO;
+import com.fpmislata.banco.security.PasswordManager;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario> implements U
 
     @Autowired
     UsuarioDAO usuarioDAO;
+    
+    @Autowired
+    PasswordManager passwordManager;
 
     public UsuarioServiceImpl() {
     }
@@ -40,4 +45,10 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario> implements U
         return null;
     }
     
+    
+    @Override
+    public Usuario insert(Usuario usuario) throws BusinessException {
+        usuario.setPasswordEncrypt(passwordManager.encrypt(usuario.getPasswordEncrypt()));
+        return genericDAO.insert(usuario);
+    }
 }

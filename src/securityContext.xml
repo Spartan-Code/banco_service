@@ -10,4 +10,6 @@
     <context:annotation-config/>
 
     <bean class="com.fpmislata.banco.security.impl.AuthorizationImpDummy" />
+    <bean class="com.fpmislata.banco.security.impl.PasswordManagerImplJasypt" />
+    
 </beans>
