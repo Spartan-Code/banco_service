@@ -67,7 +67,7 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        t = (T) session.save(t);
+        session.save(t);
 
         session.getTransaction().commit();
         session.close();
