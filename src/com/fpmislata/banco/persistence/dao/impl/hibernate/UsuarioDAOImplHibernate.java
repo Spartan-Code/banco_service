@@ -7,7 +7,7 @@ package com.fpmislata.banco.persistence.dao.impl.hibernate;
 
 import com.fpmislata.banco.business.domain.Usuario;
 import com.fpmislata.banco.persistence.dao.UsuarioDAO;
-import java.util.List;
+import org.hibernate.Session;
 
 /**
  *
@@ -16,8 +16,15 @@ import java.util.List;
 public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario> implements UsuarioDAO  {
 
     @Override
-    public List<Usuario> findByNombre(String nombre) {
-        return null;
+    public Usuario findByUser(String user) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Usuario usuario =(Usuario)session.createQuery("SELECT e FROM user  e where nombre="+user).uniqueResult();        
+        session.getTransaction().commit();
+        session.close();
+        return usuario;
     }
+
+    
     
 }

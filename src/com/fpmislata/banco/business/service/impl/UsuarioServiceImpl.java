@@ -41,8 +41,8 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario> implements U
     
     
     @Override
-    public List<Usuario> findByNombre(String nombre) {
-        return null;
+    public Usuario findByUser(String nombre) {
+        return usuarioDAO.findByUser(nombre);
     }
     
     

@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface UsuarioService extends GenericService<Usuario> {
     
-    List<Usuario> findByNombre(String nombre);
+    Usuario findByUser(String nombre);
 }

@@ -13,5 +13,5 @@ import java.util.List;
  * @author Equipo
  */
 public interface UsuarioDAO extends GenericDAO<Usuario> {
-    List<Usuario> findByNombre(String nombre);
+    Usuario findByUser(String user);
 }
