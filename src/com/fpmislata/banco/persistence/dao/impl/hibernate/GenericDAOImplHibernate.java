@@ -9,9 +9,11 @@ import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.GenericDAO;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import javax.validation.ConstraintViolationException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 
 /**
  *
@@ -63,30 +65,44 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
 
     @Override
     public T insert(T t) throws BusinessException {
-
         Session session = sessionFactory.openSession();
+        try{
+        
         session.beginTransaction();
 
         session.save(t);
 
         session.getTransaction().commit();
-        session.close();
+        
 
         return t;
-
+        }catch(ConstraintViolationException cve){
+            throw new BusinessException(cve);
+        } finally{
+           session.close();
+        }
+        
     }
 
     @Override
     public T update(T t) throws BusinessException {
         Session session = sessionFactory.openSession();
+        try{
+        
+        
         session.beginTransaction();
 
         session.update(t);
 
         session.getTransaction().commit();
-        session.close();
+
 
         return t;
+        }catch(ConstraintViolationException cve){
+            throw new BusinessException(cve);
+        } finally{
+           session.close();
+        }
     }
 
     @Override

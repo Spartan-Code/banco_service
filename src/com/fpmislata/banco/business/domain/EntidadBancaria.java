@@ -7,15 +7,29 @@ package com.fpmislata.banco.business.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
  * @author Dark
  */
 public class EntidadBancaria implements Serializable {
-    
+
     private int idEntidadBancaria;
-    private String nombre, codigoEntidad,direccion,cif;
+
+    
+    @NotBlank
+    @Size(min = 5, max = 50)
+    private String nombre;
+    @NotBlank
+    @Pattern(regexp="[0-9]{4}")
+    private String codigoEntidad;
+    @NotBlank
+    @Size(min = 20, max = 100)
+    private String direccion;
+    private String cif;
     private Date fechaCreacion;
 
     public EntidadBancaria(int idEntidadBancaria, String nombre, String codigoEntidad, String direccion, String cif, Date fechaCreacion) {
@@ -78,7 +92,5 @@ public class EntidadBancaria implements Serializable {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-    
-    
-    
+
 }

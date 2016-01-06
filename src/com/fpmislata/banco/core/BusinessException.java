@@ -7,6 +7,7 @@ package com.fpmislata.banco.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.ConstraintViolation;
 
 /**
  *
@@ -19,6 +20,17 @@ public class BusinessException extends Exception{
     public BusinessException(List<BusinessMessage> businessMessages) {
         this.businessMessages.addAll(businessMessages);
     }
+    
+     public BusinessException(javax.validation.ConstraintViolationException cve) {
+        for (ConstraintViolation constraintViolation : cve.getConstraintViolations()) {
+            
+            String fieldName = constraintViolation.getPropertyPath().toString();
+            String message = constraintViolation.getMessage();
+
+            businessMessages.add(new BusinessMessage(fieldName+" : "+message, fieldName));
+        }
+    }
+
 
     public BusinessException(String message, String fieldName) {
         BusinessMessage businessMessage = new BusinessMessage(message, fieldName);

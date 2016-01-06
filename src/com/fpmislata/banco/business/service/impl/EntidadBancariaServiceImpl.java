@@ -15,8 +15,6 @@ import com.fpmislata.banco.persistence.dao.EntidadBancariaDAO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,9 +29,9 @@ public class EntidadBancariaServiceImpl extends GenericServiceImpl<EntidadBancar
 
     
 
-    static final private Pattern patternCodigoEntidad = Pattern.compile("[0-9]{4}");
-    static final private Pattern patternNombre = Pattern.compile("\\w{5,50}");
-    static final private Pattern patternDireccion = Pattern.compile("\\w{20,100}");
+//    static final private Pattern patternCodigoEntidad = Pattern.compile("[0-9]{4}");
+//    static final private Pattern patternNombre = Pattern.compile("\\w{5,50}");
+//    static final private Pattern patternDireccion = Pattern.compile("\\w{20,100}");
 
     public EntidadBancariaServiceImpl() {
     }
@@ -55,36 +53,36 @@ public class EntidadBancariaServiceImpl extends GenericServiceImpl<EntidadBancar
         List<BusinessMessage> businessMessages = new ArrayList<>();
         Validador validador = new Validador();
         
-        if (entidadBancaria.getCodigoEntidad() == null || entidadBancaria.getCodigoEntidad().isEmpty()) {
-            businessMessages.add(new BusinessMessage("El campo codigo no puede estar vacio", "Codigo"));
-        } else {
-            Matcher matcher = patternCodigoEntidad.matcher(entidadBancaria.getCodigoEntidad());
-            if (!matcher.matches()) {
-                businessMessages.add(new BusinessMessage("El campo codigo debe contener cuatro numeros del 0 al 9", "Codigo"));
-            }
-        }
-
-        if (entidadBancaria.getNombre() == null || entidadBancaria.getNombre().isEmpty()) {
-            businessMessages.add(new BusinessMessage("El campo Nombre no puede estar vacio", "Nombre"));
-        } else {
-            Matcher matcher = patternNombre.matcher(entidadBancaria.getNombre());
-            if (!matcher.matches()) {
-                businessMessages.add(new BusinessMessage("El campo Nombre debe contener entre 5 y 50 caracteres.", "Nombre"));
-            }
-        }
-
-        if (entidadBancaria.getFechaCreacion() == null) {
-            businessMessages.add(new BusinessMessage("El campo Fecha no puede estar vacio", "Fecha"));
-        }
-
-        if (entidadBancaria.getDireccion() == null || entidadBancaria.getDireccion().isEmpty()) {
-            businessMessages.add(new BusinessMessage("El campo Direccion no puede estar vacio", "Direccion"));
-        } else {
-            Matcher matcher = patternDireccion.matcher(entidadBancaria.getDireccion());
-            if (!matcher.matches()) {
-                businessMessages.add(new BusinessMessage("El campo Direccion debe contener entre 20 y 100 caracteres.", "Direccion"));
-            }
-        }
+//        if (entidadBancaria.getCodigoEntidad() == null || entidadBancaria.getCodigoEntidad().isEmpty()) {
+//            businessMessages.add(new BusinessMessage("El campo codigo no puede estar vacio", "Codigo"));
+//        } else {
+//            Matcher matcher = patternCodigoEntidad.matcher(entidadBancaria.getCodigoEntidad());
+//            if (!matcher.matches()) {
+//                businessMessages.add(new BusinessMessage("El campo codigo debe contener cuatro numeros del 0 al 9", "Codigo"));
+//            }
+//        }
+//
+//        if (entidadBancaria.getNombre() == null || entidadBancaria.getNombre().isEmpty()) {
+//            businessMessages.add(new BusinessMessage("El campo Nombre no puede estar vacio", "Nombre"));
+//        } else {
+//            Matcher matcher = patternNombre.matcher(entidadBancaria.getNombre());
+//            if (!matcher.matches()) {
+//                businessMessages.add(new BusinessMessage("El campo Nombre debe contener entre 5 y 50 caracteres.", "Nombre"));
+//            }
+//        }
+//
+//        if (entidadBancaria.getFechaCreacion() == null) {
+//            businessMessages.add(new BusinessMessage("El campo Fecha no puede estar vacio", "Fecha"));
+//        }
+//
+//        if (entidadBancaria.getDireccion() == null || entidadBancaria.getDireccion().isEmpty()) {
+//            businessMessages.add(new BusinessMessage("El campo Direccion no puede estar vacio", "Direccion"));
+//        } else {
+//            Matcher matcher = patternDireccion.matcher(entidadBancaria.getDireccion());
+//            if (!matcher.matches()) {
+//                businessMessages.add(new BusinessMessage("El campo Direccion debe contener entre 20 y 100 caracteres.", "Direccion"));
+//            }
+//        }
 
         if (entidadBancaria.getCif() == null || entidadBancaria.getCif().isEmpty()) {
             businessMessages.add(new BusinessMessage("El campo CIF no puede estar vacio", "CIF"));

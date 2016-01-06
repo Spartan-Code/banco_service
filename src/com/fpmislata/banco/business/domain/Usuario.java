@@ -6,6 +6,10 @@
 package com.fpmislata.banco.business.domain;
 
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 
 
@@ -15,8 +19,21 @@ import java.io.Serializable;
  */
 
 public class Usuario implements Serializable {
+    
+     
     private int idUsuario;
-    private String nombre,passwordEncrypt,email;
+     
+    
+    @NotBlank
+    @Size(min = 5, max = 20)
+    private String nombre;
+    
+    private String passwordEncrypt;
+       
+    @NotBlank
+    @Email
+    @Size(min = 20, max = 50)
+    private String email;
     private Rol rol;
 
     public Usuario() {
