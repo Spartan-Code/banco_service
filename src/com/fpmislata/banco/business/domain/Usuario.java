@@ -6,7 +6,7 @@
 package com.fpmislata.banco.business.domain;
 
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -39,6 +39,12 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
+    @AssertTrue(message = "El CIF no es vñalido")
+    private boolean validateCIF() {
+        return false;
+    }
+    
+    
     public Usuario(int idUsuario, String nombre, String passwordEncrypt, String email, Rol rol) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
