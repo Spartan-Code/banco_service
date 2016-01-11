@@ -16,10 +16,10 @@ import org.hibernate.Session;
 public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario> implements UsuarioDAO  {
 
     @Override
-    public Usuario findByUser(String user) {
+    public Usuario findByNickName(String nickName) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Usuario usuario =(Usuario)session.createQuery("SELECT e FROM user  e where nombre="+user).uniqueResult();        
+        Usuario usuario =(Usuario)session.createQuery("SELECT e FROM user  e where nombre="+nickName).uniqueResult();        
         session.getTransaction().commit();
         session.close();
         return usuario;

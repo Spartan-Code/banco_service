@@ -6,7 +6,7 @@
 package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.Usuario;
-import java.util.List;
+
 
 /**
  *
@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface UsuarioService extends GenericService<Usuario> {
     
-    Usuario findByUser(String nombre);
+    Usuario findByNickName(String nickName);
 }

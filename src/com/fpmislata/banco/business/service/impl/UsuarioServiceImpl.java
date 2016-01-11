@@ -10,7 +10,6 @@ import com.fpmislata.banco.business.service.UsuarioService;
 import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.UsuarioDAO;
 import com.fpmislata.banco.security.PasswordManager;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,8 +40,8 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario> implements U
     
     
     @Override
-    public Usuario findByUser(String nombre) {
-        return usuarioDAO.findByUser(nombre);
+    public Usuario findByNickName(String nickName) {
+        return usuarioDAO.findByNickName(nickName);
     }
     
     

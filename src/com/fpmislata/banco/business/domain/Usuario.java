@@ -26,6 +26,9 @@ public class Usuario implements Serializable {
     
     @NotBlank
     @Size(min = 5, max = 20)
+    private String nickName;
+    
+    
     private String nombre;
     
     private String passwordEncrypt;
@@ -43,15 +46,26 @@ public class Usuario implements Serializable {
     private boolean validateCIF() {
         return false;
     }
-    
-    
-    public Usuario(int idUsuario, String nombre, String passwordEncrypt, String email, Rol rol) {
+
+    public Usuario(int idUsuario, String nickName, String nombre, String passwordEncrypt, String email, Rol rol) {
         this.idUsuario = idUsuario;
+        this.nickName = nickName;
         this.nombre = nombre;
         this.passwordEncrypt = passwordEncrypt;
         this.email = email;
         this.rol = rol;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
+   
 
     public int getIdUsuario() {
         return idUsuario;
@@ -61,12 +75,12 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getPasswordEncrypt() {

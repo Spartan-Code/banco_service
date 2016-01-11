@@ -3,8 +3,9 @@
 <hibernate-mapping>
     <class name="com.fpmislata.banco.business.domain.Usuario" table="user" >
         <id  name="idUsuario" type="integer" />
-        <property  name="nombre" type="string" />
+        <property  name="nickName" type="string" />
         <property column="password" name="passwordEncrypt" update="false" type="string" />
+        <property  name="nombre" type="string" />
         <property name="email" type="string" />
         <property name="rol">
             <type name="org.hibernate.type.EnumType">

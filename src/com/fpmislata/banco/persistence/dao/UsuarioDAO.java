@@ -6,12 +6,12 @@
 package com.fpmislata.banco.persistence.dao;
 
 import com.fpmislata.banco.business.domain.Usuario;
-import java.util.List;
+
 
 /**
  *
  * @author Equipo
  */
 public interface UsuarioDAO extends GenericDAO<Usuario> {
-    Usuario findByUser(String user);
+    Usuario findByNickName(String nickName);
 }
