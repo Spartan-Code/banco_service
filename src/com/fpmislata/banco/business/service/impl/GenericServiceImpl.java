@@ -39,13 +39,13 @@ public class GenericServiceImpl<T> implements GenericService<T> {
 
     @Override
     public T insert(T t) throws BusinessException {
-        this.insertupdateValidation(t);
+//        this.insertupdateValidation(t);
         return genericDAO.insert(t);
     }
 
     @Override
     public T update(T t)  throws BusinessException {
-        this.insertupdateValidation(t);
+//        this.insertupdateValidation(t);
          return genericDAO.update(t);
          
     }
