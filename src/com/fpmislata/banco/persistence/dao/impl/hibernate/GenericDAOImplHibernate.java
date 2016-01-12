@@ -14,7 +14,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-
 /**
  *
  * @author Equipo
@@ -66,42 +65,41 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
     @Override
     public T insert(T t) throws BusinessException {
         Session session = sessionFactory.openSession();
-        try{
-        
-        session.beginTransaction();
+        try {
 
-        session.save(t);
+            session.beginTransaction();
 
-        session.getTransaction().commit();
-        
+            session.save(t);
 
-        return t;
-        }catch(ConstraintViolationException cve){
+            session.getTransaction().commit();
+
+            return t;
+        } catch (javax.validation.ConstraintViolationException cve) {
             throw new BusinessException(cve);
-        } finally{
-           session.close();
+        } catch (org.hibernate.exception.ConstraintViolationException cve) {
+            throw new BusinessException(cve);
+        } finally {
+            session.close();
         }
-        
+
     }
 
     @Override
     public T update(T t) throws BusinessException {
         Session session = sessionFactory.openSession();
-        try{
-        
-        
-        session.beginTransaction();
+        try {
 
-        session.update(t);
+            session.beginTransaction();
 
-        session.getTransaction().commit();
+            session.update(t);
 
+            session.getTransaction().commit();
 
-        return t;
-        }catch(ConstraintViolationException cve){
+            return t;
+        } catch (ConstraintViolationException cve) {
             throw new BusinessException(cve);
-        } finally{
-           session.close();
+        } finally {
+            session.close();
         }
     }
 

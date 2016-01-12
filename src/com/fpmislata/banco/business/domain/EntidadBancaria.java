@@ -6,7 +6,6 @@
 package com.fpmislata.banco.business.domain;
 
 import com.aeat.valida.Validador;
-import com.fpmislata.banco.core.BusinessMessage;
 import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.AssertTrue;

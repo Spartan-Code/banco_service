@@ -30,6 +30,17 @@ public class BusinessException extends Exception{
             businessMessages.add(new BusinessMessage(fieldName+" : "+message, fieldName));
         }
     }
+     
+      public BusinessException(org.hibernate.exception.ConstraintViolationException cve) {
+       
+            
+            
+         
+            String message = "El valor ya existe."+ cve.getLocalizedMessage();
+
+            businessMessages.add(new BusinessMessage(message, ""));
+        
+    }
 
 
     public BusinessException(String message, String fieldName) {

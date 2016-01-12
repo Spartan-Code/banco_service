@@ -4,7 +4,7 @@
     <class name="com.fpmislata.banco.business.domain.EntidadBancaria" table="entidadbancaria" >
         <id  name="idEntidadBancaria" />
         <property name="nombre" />
-        <property name="codigoEntidad" />
+        <property name="codigoEntidad" unique="true" />
         <property name="fechaCreacion" />
         <property name="direccion" />
         <property name="cif" />
