@@ -10,5 +10,5 @@ package com.fpmislata.banco.business.domain;
  * @author German
  */
 public enum Rol {
-    Usuario, Administrador
+    Cliente, Trabajador
 }
