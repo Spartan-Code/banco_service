@@ -6,6 +6,7 @@
 package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.Usuario;
+import com.fpmislata.banco.core.BusinessException;
 
 
 /**
@@ -14,5 +15,5 @@ import com.fpmislata.banco.business.domain.Usuario;
  */
 public interface UsuarioService extends GenericService<Usuario> {
     
-    Usuario findByNickName(String nickName);
+    Usuario findByNickName(String nickName)throws BusinessException;
 }

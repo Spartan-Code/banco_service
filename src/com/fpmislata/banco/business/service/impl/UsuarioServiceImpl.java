@@ -40,7 +40,7 @@ public class UsuarioServiceImpl extends GenericServiceImpl<Usuario> implements U
     
     
     @Override
-    public Usuario findByNickName(String nickName) {
+    public Usuario findByNickName(String nickName)throws BusinessException {
         return usuarioDAO.findByNickName(nickName);
     }
     
