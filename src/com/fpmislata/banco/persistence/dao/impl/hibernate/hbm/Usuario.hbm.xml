@@ -8,7 +8,7 @@
         <property  name="nombre" type="string" />
         <property name="email" type="string" />
         <property name="rol">
-            <type name="org.hibernate.type.EnumType">
+            <type name="org.hibernate.type.EnumType" >
                 <param name="enumClass">com.fpmislata.banco.business.domain.Rol</param>
                 <param name="type">12</param>
             </type>
