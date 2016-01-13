@@ -5,43 +5,58 @@
  */
 package com.fpmislata.banco.core;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.validation.ConstraintViolation;
 
 /**
  *
  * @author German
  */
-public class BusinessException extends Exception{
-    
+public class BusinessException extends Exception {
+
     private List<BusinessMessage> businessMessages = new ArrayList<>();
 
     public BusinessException(List<BusinessMessage> businessMessages) {
         this.businessMessages.addAll(businessMessages);
     }
-    
-     public BusinessException(javax.validation.ConstraintViolationException cve) {
+
+    public BusinessException(javax.validation.ConstraintViolationException cve) {
         for (ConstraintViolation constraintViolation : cve.getConstraintViolations()) {
-            
+
             String fieldName = constraintViolation.getPropertyPath().toString();
             String message = constraintViolation.getMessage();
 
-            businessMessages.add(new BusinessMessage(fieldName+" : "+message, fieldName));
+            businessMessages.add(new BusinessMessage(fieldName + " : " + message, fieldName));
         }
     }
-     
-      public BusinessException(org.hibernate.exception.ConstraintViolationException cve) {
-       
-            
-            
-         
-            String message = "El valor ya existe."+ cve.getLocalizedMessage();
 
-            businessMessages.add(new BusinessMessage(message, ""));
+    public BusinessException(org.hibernate.exception.ConstraintViolationException cve) {
         
+        SQLException sqlException = cve.getSQLException();
+        if (sqlException.getErrorCode() == 1062 && sqlException.getSQLState().equals("23000")) {
+            Pattern pattern = Pattern.compile("Duplicate entry '(.*)' for key '(.*)'");
+
+            Matcher matcher = pattern.matcher(sqlException.getMessage());
+            if (matcher.matches()) {
+                String value = matcher.group(1);
+                String propertyName = matcher.group(2);
+                String message="El valor  "+value+" esta duplicado";
+                businessMessages.add(new BusinessMessage(propertyName+" : "+message,propertyName));
+            } else {
+
+            }
+
+//            String message = "El valor ya existe."+ cve.getLocalizedMessage();
+//
+//            businessMessages.add(new BusinessMessage(message, ""));
+        }
     }
 
+    
 
     public BusinessException(String message, String fieldName) {
         BusinessMessage businessMessage = new BusinessMessage(message, fieldName);
@@ -56,5 +71,4 @@ public class BusinessException extends Exception{
         this.businessMessages = businessMessages;
     }
 
-    
 }

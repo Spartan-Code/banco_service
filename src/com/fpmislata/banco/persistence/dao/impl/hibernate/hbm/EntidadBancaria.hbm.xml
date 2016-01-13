@@ -7,6 +7,6 @@
         <property name="codigoEntidad" unique="true" />
         <property name="fechaCreacion" />
         <property name="direccion" />
-        <property name="cif" />
+        <property name="cif"  />
     </class>
 </hibernate-mapping>
