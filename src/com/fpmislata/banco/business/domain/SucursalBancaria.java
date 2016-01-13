@@ -5,29 +5,34 @@
  */
 package com.fpmislata.banco.business.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author German
  */
-public class SucursalBancaria {
-    
+public class SucursalBancaria implements Serializable {
+
     private int idSucursalBancaria;
-    private String nombre, codigoSucursal,direccion;
+    private String nombre, codigoSucursal, direccion , poblacion, codigoPostal, telefono, email;
     private Date fechaCreacion;
     private EntidadBancaria entidadBancaria;
 
-    public SucursalBancaria(int idSucursalBancaria, String nombre, String codigoSucursal, String direccion, Date fechaCreacion, EntidadBancaria entidadBancaria) {
+    public SucursalBancaria() {
+    }
+
+    public SucursalBancaria(int idSucursalBancaria, String nombre, String codigoSucursal, String direccion, String poblacion, String codigoPostal, String telefono, String email, Date fechaCreacion, EntidadBancaria entidadBancaria) {
         this.idSucursalBancaria = idSucursalBancaria;
         this.nombre = nombre;
         this.codigoSucursal = codigoSucursal;
         this.direccion = direccion;
+        this.poblacion = poblacion;
+        this.codigoPostal = codigoPostal;
+        this.telefono = telefono;
+        this.email = email;
         this.fechaCreacion = fechaCreacion;
         this.entidadBancaria = entidadBancaria;
-    }
-
-    public SucursalBancaria() {
     }
 
     public int getIdSucursalBancaria() {
@@ -62,6 +67,38 @@ public class SucursalBancaria {
         this.direccion = direccion;
     }
 
+    public String getPoblacion() {
+        return poblacion;
+    }
+
+    public void setPoblacion(String poblacion) {
+        this.poblacion = poblacion;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Date getFechaCreacion() {
         return fechaCreacion;
     }
@@ -77,6 +114,8 @@ public class SucursalBancaria {
     public void setEntidadBancaria(EntidadBancaria entidadBancaria) {
         this.entidadBancaria = entidadBancaria;
     }
+
+    
     
     
     

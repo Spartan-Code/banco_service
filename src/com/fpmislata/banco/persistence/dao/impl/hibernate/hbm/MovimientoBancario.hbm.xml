@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.fpmislata.banco.business.domain.SucursalBancaria" table="movimientobancario" >
+        <id  name="idMovimientoBancario" type="integer" />  
+        <property name="fecha" />
+        <property  name="concepto"  />
+        <property name="tipo">
+            <type name="org.hibernate.type.EnumType" >
+                <param name="enumClass">com.fpmislata.banco.business.domain.Tipo</param>
+                <param name="type">12</param>
+            </type>
+        </property>
+        <property  name="importe"  />
+        <property  name="saldo"  />
+        
+        <many-to-one name="cuentaBancaria" >
+            <column name="idCuentaBancaria"  />
+        </many-to-one>
+        
+        
+        
+        
+    </class>
+</hibernate-mapping>

@@ -20,14 +20,16 @@ public class AuthorizationImpDummy implements Authorization {
     public boolean isAuthorizedURL(Usuario usuario, String url, String metodo) {
         if(url.equalsIgnoreCase("/banco_api/api/login")){
          return true;
-        }
-        
-        
-        if(usuario.getRol()== Rol.Trabajador ){
-         return true;
         }else{
-            return false;
+            return true;
         }
+        
+        
+//        if(usuario.getRol()== Rol.Trabajador ){
+//         return true;
+//        }else{
+//            return true;
+//        }
         
         
     }

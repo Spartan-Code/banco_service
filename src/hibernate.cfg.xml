@@ -5,9 +5,14 @@
         <property name="connection.datasource">java:/comp/env/jdbc/MySQLDS</property>        
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="hibernate.show_sql">true</property>
+        
+        
 
         <mapping resource="com/fpmislata/banco/persistence/dao/impl/hibernate/hbm/EntidadBancaria.hbm.xml"/>
         <mapping resource="com/fpmislata/banco/persistence/dao/impl/hibernate/hbm/Usuario.hbm.xml"/>
+        <mapping resource="com/fpmislata/banco/persistence/dao/impl/hibernate/hbm/SucursalBancaria.hbm.xml"/>
+        <mapping resource="com/fpmislata/banco/persistence/dao/impl/hibernate/hbm/CuentaBancaria.hbm.xml"/>
+        <mapping resource="com/fpmislata/banco/persistence/dao/impl/hibernate/hbm/MovimientoBancario.hbm.xml"/>
         
     </session-factory>
 </hibernate-configuration>
