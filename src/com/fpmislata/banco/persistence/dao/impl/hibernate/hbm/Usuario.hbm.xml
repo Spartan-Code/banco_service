@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
  <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.fpmislata.banco.business.domain.Usuario" table="user" >
+    <class name="com.fpmislata.banco.business.domain.Usuario" table="usuario" >
         <id  name="idUsuario" type="integer" />
-        <property  name="nickName" type="string" />
+        <property  name="nickName" type="string" unique="true" />
         <property column="password" name="passwordEncrypt" update="false" type="string" />
         <property  name="nombre" type="string" />
-        <property name="email" type="string" />
+        <property name="nif" type="string" unique="true" />
+        <property name="email" type="string" unique="true" />
         <property name="rol">
             <type name="org.hibernate.type.EnumType" >
                 <param name="enumClass">com.fpmislata.banco.business.domain.Rol</param>

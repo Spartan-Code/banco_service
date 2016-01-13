@@ -28,6 +28,8 @@ public class Usuario implements Serializable {
     private String nickName;
     
     
+    private String nif;
+    
     private String nombre;
     
     private String passwordEncrypt;
@@ -41,16 +43,27 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    
-
-    public Usuario(int idUsuario, String nickName, String nombre, String passwordEncrypt, String email, Rol rol) {
+    public Usuario(int idUsuario, String nickName, String nif, String nombre, String passwordEncrypt, String email, Rol rol) {
         this.idUsuario = idUsuario;
         this.nickName = nickName;
+        this.nif = nif;
         this.nombre = nombre;
         this.passwordEncrypt = passwordEncrypt;
         this.email = email;
         this.rol = rol;
     }
+
+    public String getNif() {
+        return nif;
+    }
+
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
+
+    
+
+    
 
     public String getNombre() {
         return nombre;
