@@ -5,13 +5,16 @@
  */
 package com.fpmislata.banco.business.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  *
  * @author Equipo
  */
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MovimientoBancario implements Serializable {
     
     
@@ -19,13 +22,13 @@ public class MovimientoBancario implements Serializable {
     private Date fecha;
     private String concepto;
     private Tipo tipo;
-    private float saldo, importe;
+    private BigDecimal saldo, importe;
     private CuentaBancaria cuentaBancaria;
 
     public MovimientoBancario() {
     }
 
-    public MovimientoBancario(int idMovimientoBancario, Date fecha, String concepto, Tipo tipo, float saldo, float importe, CuentaBancaria cuentaBancaria) {
+    public MovimientoBancario(int idMovimientoBancario, Date fecha, String concepto, Tipo tipo, BigDecimal saldo, BigDecimal importe, CuentaBancaria cuentaBancaria) {
         this.idMovimientoBancario = idMovimientoBancario;
         this.fecha = fecha;
         this.concepto = concepto;
@@ -67,19 +70,19 @@ public class MovimientoBancario implements Serializable {
         this.tipo = tipo;
     }
 
-    public float getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(float saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 
-    public float getImporte() {
+    public BigDecimal getImporte() {
         return importe;
     }
 
-    public void setImporte(float importe) {
+    public void setImporte(BigDecimal importe) {
         this.importe = importe;
     }
 

@@ -5,6 +5,7 @@
  */
 package com.fpmislata.banco.business.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -16,7 +17,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author German
  */
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Usuario implements Serializable {
     
      

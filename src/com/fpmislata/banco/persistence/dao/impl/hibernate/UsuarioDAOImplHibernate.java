@@ -18,11 +18,10 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario> im
 
     @Override
     public Usuario findByNickName(String nickName) throws BusinessException {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
+        
         Usuario usuario = (Usuario) session.createQuery("SELECT u FROM Usuario u WHERE nickName = :nickName").setParameter("nickName", nickName).uniqueResult();
-        session.getTransaction().commit();
-        session.close();
+        
         if(usuario==null){
             throw new BusinessException("El usuario no existe","usuario");
         }else{

@@ -5,18 +5,22 @@
  */
 package com.fpmislata.banco.business.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  *
  * @author Equipo
  */
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CuentaBancaria implements Serializable{
     
     private int idCuentaBancaria;
     private String numeroCuenta;
-    private float saldo;
+    private BigDecimal saldo;
     private Date fechaCreacion;
     private SucursalBancaria sucursalBancaria;
     private Usuario usuario;
@@ -24,7 +28,7 @@ public class CuentaBancaria implements Serializable{
     public CuentaBancaria() {
     }
 
-    public CuentaBancaria(int idCuentaBancaria, String numeroCuenta, float saldo, Date fechaCreacion, SucursalBancaria sucursalBancaria, Usuario usuario) {
+    public CuentaBancaria(int idCuentaBancaria, String numeroCuenta, BigDecimal saldo, Date fechaCreacion, SucursalBancaria sucursalBancaria, Usuario usuario) {
         this.idCuentaBancaria = idCuentaBancaria;
         this.numeroCuenta = numeroCuenta;
         this.saldo = saldo;
@@ -49,11 +53,11 @@ public class CuentaBancaria implements Serializable{
         this.numeroCuenta = numeroCuenta;
     }
 
-    public float getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(float saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 

@@ -5,6 +5,7 @@
  */
 package com.fpmislata.banco.business.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,11 +13,13 @@ import java.util.Date;
  *
  * @author German
  */
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class SucursalBancaria implements Serializable {
 
     private int idSucursalBancaria;
     private String nombre, codigoSucursal, direccion , poblacion, codigoPostal, telefono, email;
     private Date fechaCreacion;
+    
     private EntidadBancaria entidadBancaria;
 
     public SucursalBancaria() {

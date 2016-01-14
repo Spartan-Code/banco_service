@@ -6,6 +6,7 @@
 package com.fpmislata.banco.business.domain;
 
 import com.aeat.valida.Validador;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 import javax.validation.constraints.AssertTrue;
@@ -17,6 +18,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author Dark
  */
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class EntidadBancaria implements Serializable {
 
     private int idEntidadBancaria;

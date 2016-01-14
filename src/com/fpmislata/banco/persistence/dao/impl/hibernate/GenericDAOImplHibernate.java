@@ -32,13 +32,12 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
 
     @Override
     public T get(int id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
+        
 
         T t = (T) session.get(this.getEntityClass(), id);
 
-        session.getTransaction().commit();
-        session.close();
+        
 
         return t;
     }
@@ -46,8 +45,8 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
     @Override
     public boolean delete(int id) {
         boolean borrado;
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
+        
         T t = this.get(id);
         if (t == null) {
             borrado = false;
@@ -57,60 +56,54 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
             borrado = this.get(id) != null;
 
         }
-        session.getTransaction().commit();
-        session.close();
+        
         return borrado;
     }
 
     @Override
     public T insert(T t) throws BusinessException {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         try {
 
-            session.beginTransaction();
+            
 
             session.save(t);
 
-            session.getTransaction().commit();
+            
 
             return t;
         } catch (javax.validation.ConstraintViolationException cve) {
             throw new BusinessException(cve);
         } catch (org.hibernate.exception.ConstraintViolationException cve) {
             throw new BusinessException(cve);
-        } finally {
-            session.close();
-        }
+        } 
 
     }
 
     @Override
     public T update(T t) throws BusinessException {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         try {
 
-            session.beginTransaction();
+            
 
             session.update(t);
 
-            session.getTransaction().commit();
+            
 
             return t;
         } catch (ConstraintViolationException cve) {
             throw new BusinessException(cve);
-        } finally {
-            session.close();
-        }
+        } 
     }
 
     @Override
     public List<T> findAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        Session session = sessionFactory.getCurrentSession();
+        
         Query query = session.createQuery("SELECT e FROM " + getEntityClass().getName() + " e");
         List<T> entities = query.list();
-        session.getTransaction().commit();
-        session.close();
+        
         return entities;
     }
 
