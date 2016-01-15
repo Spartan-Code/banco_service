@@ -10,5 +10,5 @@ package com.fpmislata.banco.business.domain;
  * @author Equipo
  */
 public enum Tipo {
-    Debe,haber
+    Debe,Haber
 }
