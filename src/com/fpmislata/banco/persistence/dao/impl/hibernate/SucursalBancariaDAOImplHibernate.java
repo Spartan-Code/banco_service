@@ -6,12 +6,34 @@
 package com.fpmislata.banco.persistence.dao.impl.hibernate;
 
 import com.fpmislata.banco.business.domain.SucursalBancaria;
+import com.fpmislata.banco.business.domain.Usuario;
+import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.SucursalBancariaDAO;
+import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
  * @author Equipo
  */
 public class SucursalBancariaDAOImplHibernate extends GenericDAOImplHibernate<SucursalBancaria> implements SucursalBancariaDAO {
+
+    @Override
+    public List<SucursalBancaria> findByidEntidadBancaria(int idEntidadBancaria) {
+        Session session = sessionFactory.getCurrentSession();
+        
+        
+        Query query = session.createQuery("SELECT s FROM SucursalBancaria s WHERE s.entidadBancaria.idEntidadBancaria = :idEntidadBancaria");
+        query.setInteger("idEntidadBancaria",idEntidadBancaria);
+        
+        List<SucursalBancaria> sucursalesBancarias = query.list();
+        
+        
+        return sucursalesBancarias;
+       
+        
+       
+    }
     
 }

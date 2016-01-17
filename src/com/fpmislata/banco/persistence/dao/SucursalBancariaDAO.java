@@ -5,7 +5,10 @@
  */
 package com.fpmislata.banco.persistence.dao;
 
+
 import com.fpmislata.banco.business.domain.SucursalBancaria;
+import com.fpmislata.banco.core.BusinessException;
+import java.util.List;
 
 
 
@@ -14,5 +17,8 @@ import com.fpmislata.banco.business.domain.SucursalBancaria;
  * @author Equipo
  */
 public interface SucursalBancariaDAO extends GenericDAO<SucursalBancaria> {
+    
+     List<SucursalBancaria> findByidEntidadBancaria(int idEntidadBancaria) ;
+    
     
 }
