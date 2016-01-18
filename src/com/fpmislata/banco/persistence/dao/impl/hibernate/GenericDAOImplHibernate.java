@@ -51,12 +51,15 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
         if (t == null) {
             borrado = false;
         } else {
-
+            
+            session.beginTransaction();
+            
             session.delete(t);
             borrado = this.get(id) != null;
-
+            
+             session.getTransaction().commit();
         }
-        
+       
         return borrado;
     }
 
@@ -65,11 +68,11 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
         Session session = sessionFactory.getCurrentSession();
         try {
 
-            
+            session.beginTransaction();
 
             session.save(t);
 
-            
+            session.getTransaction().commit();
 
             return t;
         } catch (javax.validation.ConstraintViolationException cve) {
@@ -85,11 +88,11 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
         Session session = sessionFactory.getCurrentSession();
         try {
 
-            
+            session.beginTransaction();
 
             session.update(t);
 
-            
+            session.getTransaction().commit();
 
             return t;
         } catch (ConstraintViolationException cve) {
