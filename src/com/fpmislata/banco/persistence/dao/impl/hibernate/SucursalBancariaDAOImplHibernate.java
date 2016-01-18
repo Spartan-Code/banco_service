@@ -20,18 +20,22 @@ public class SucursalBancariaDAOImplHibernate extends GenericDAOImplHibernate<Su
     @Override
     public List<SucursalBancaria> findByidEntidadBancaria(int idEntidadBancaria) {
         Session session = sessionFactory.getCurrentSession();
-        
-        
+
         Query query = session.createQuery("SELECT s FROM SucursalBancaria s WHERE s.entidadBancaria.idEntidadBancaria = :idEntidadBancaria");
-        query.setInteger("idEntidadBancaria",idEntidadBancaria);
-        
+        query.setInteger("idEntidadBancaria", idEntidadBancaria);
+
         List<SucursalBancaria> sucursalesBancarias = query.list();
-        
-        
+
         return sucursalesBancarias;
-       
-        
-       
+
     }
-    
+
+    @Override
+    public List<String> findbyCodigoSucursal() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT s.codigoSucursal FROM  SucursalBancaria s");
+        List<String> codigoSucursales = query.list();
+        return codigoSucursales;
+    }
+
 }

@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface SucursalBancariaService extends GenericService<SucursalBancaria> {
      List<SucursalBancaria> findByidEntidadBancaria(int idEntidadBancaria);
+     List<String> findbyCodigoSucursal();
 }

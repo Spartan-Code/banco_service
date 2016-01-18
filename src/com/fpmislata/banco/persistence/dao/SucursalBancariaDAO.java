@@ -19,6 +19,6 @@ import java.util.List;
 public interface SucursalBancariaDAO extends GenericDAO<SucursalBancaria> {
     
      List<SucursalBancaria> findByidEntidadBancaria(int idEntidadBancaria) ;
-    
+     List<String> findbyCodigoSucursal();
     
 }

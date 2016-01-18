@@ -7,6 +7,7 @@ package com.fpmislata.banco.persistence.dao;
 
 import com.fpmislata.banco.business.domain.Usuario;
 import com.fpmislata.banco.core.BusinessException;
+import java.util.List;
 
 
 /**
@@ -15,4 +16,5 @@ import com.fpmislata.banco.core.BusinessException;
  */
 public interface UsuarioDAO extends GenericDAO<Usuario> {
     Usuario findByNickName(String nickName)throws BusinessException;
+    List<String> findbyNif();
 }

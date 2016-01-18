@@ -36,5 +36,10 @@ public class SucursalBancariaServiceImpl extends GenericServiceImpl<SucursalBanc
         return sucursalBancariaDAO.findByidEntidadBancaria(idEntidadBancaria);
     }
 
+    @Override
+    public List<String> findbyCodigoSucursal() {
+        return sucursalBancariaDAO.findbyCodigoSucursal();
+    }
+
     
 }

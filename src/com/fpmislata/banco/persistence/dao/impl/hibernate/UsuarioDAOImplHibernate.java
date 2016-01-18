@@ -8,6 +8,8 @@ package com.fpmislata.banco.persistence.dao.impl.hibernate;
 import com.fpmislata.banco.business.domain.Usuario;
 import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.UsuarioDAO;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -27,6 +29,14 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario> im
         }else{
         return usuario;
         }
+    }
+
+    @Override
+    public List<String> findbyNif() {
+        Session session = sessionFactory.getCurrentSession(); 
+         Query query = session.createQuery("SELECT u.nif FROM  Usuario u");
+         List<String> nifs = query.list();
+         return nifs;
     }
 
     
