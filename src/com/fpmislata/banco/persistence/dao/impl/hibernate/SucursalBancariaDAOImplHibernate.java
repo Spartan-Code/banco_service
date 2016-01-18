@@ -6,8 +6,6 @@
 package com.fpmislata.banco.persistence.dao.impl.hibernate;
 
 import com.fpmislata.banco.business.domain.SucursalBancaria;
-import com.fpmislata.banco.business.domain.Usuario;
-import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.SucursalBancariaDAO;
 import java.util.List;
 import org.hibernate.Query;
