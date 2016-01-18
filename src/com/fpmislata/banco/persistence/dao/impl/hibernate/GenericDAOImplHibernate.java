@@ -55,9 +55,12 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
             session.beginTransaction();
             
             session.delete(t);
-            borrado = this.get(id) != null;
             
-             session.getTransaction().commit();
+            
+            session.getTransaction().commit();
+//            borrado = this.get(id) != null;
+            
+             borrado=true;
         }
        
         return borrado;
