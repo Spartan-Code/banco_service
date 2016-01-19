@@ -5,8 +5,10 @@
  */
 package com.fpmislata.banco.business.domain;
 
+import com.aeat.valida.Validador;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,7 +30,7 @@ public class Usuario implements Serializable {
     @Size(min = 5, max = 50)
     private String nickName;
     
-    
+    @NotBlank
     private String nif;
     @NotBlank
     @Size(min = 5, max = 100)
@@ -42,6 +44,10 @@ public class Usuario implements Serializable {
     private String email;
     private Rol rol;
 
+    
+    
+    
+    
     public Usuario() {
     }
 
@@ -55,6 +61,23 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
+    @AssertTrue(message = "El NIF no es valido")
+    private boolean isValidNIF() {
+        Validador validador = new Validador();
+        int ret = validador.checkNif(nif);
+               
+            if ( ret > 0) {
+                return true;
+            }else{
+                return false;
+            }
+        
+    }
+    
+    
+    
+    
+    
     public String getNif() {
         return nif;
     }
