@@ -9,6 +9,7 @@ import com.aeat.valida.Validador;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -42,6 +43,7 @@ public class Usuario implements Serializable {
     @Email
     @Size(min = 5, max = 100)
     private String email;
+    @NotNull
     private Rol rol;
 
     

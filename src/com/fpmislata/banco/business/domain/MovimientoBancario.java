@@ -24,6 +24,7 @@ public class MovimientoBancario implements Serializable {
     private Date fecha;
     @Size(min = 3, max = 100)
     private String concepto;
+    @NotNull
     private Tipo tipo;
     private BigDecimal saldo;
     @NotNull
