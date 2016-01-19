@@ -33,9 +33,10 @@ public class SucursalBancariaDAOImplHibernate extends GenericDAOImplHibernate<Su
     @Override
     public List<String> findbyCodigoSucursal() {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("SELECT s.codigoSucursal FROM  SucursalBancaria s");
-        List<String> codigoSucursales = query.list();
-        return codigoSucursales;
+        
+        Query query = session.createQuery("SELECT new map(s.idSucursalBancaria as id ,s.codigoSucursal as codigo) FROM  SucursalBancaria s");
+                
+        return query.list();
     }
 
 }

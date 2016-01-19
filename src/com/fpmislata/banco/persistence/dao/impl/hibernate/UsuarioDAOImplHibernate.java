@@ -34,9 +34,9 @@ public class UsuarioDAOImplHibernate extends GenericDAOImplHibernate<Usuario> im
     @Override
     public List<String> findbyNif() {
         Session session = sessionFactory.getCurrentSession(); 
-         Query query = session.createQuery("SELECT u.nif FROM  Usuario u");
-         List<String> nifs = query.list();
-         return nifs;
+         Query query = session.createQuery("SELECT new map(u.idUsuario as id ,u.nif as dni) FROM  Usuario u");
+          
+         return query.list();
     }
 
     
