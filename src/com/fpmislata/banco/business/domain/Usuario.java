@@ -25,19 +25,20 @@ public class Usuario implements Serializable {
      
     
     @NotBlank
-    @Size(min = 5, max = 20)
+    @Size(min = 5, max = 50)
     private String nickName;
     
     
     private String nif;
-    
+    @NotBlank
+    @Size(min = 5, max = 100)
     private String nombre;
-    
+    @NotBlank
     private String passwordEncrypt;
        
     @NotBlank
     @Email
-    @Size(min = 20, max = 50)
+    @Size(min = 5, max = 100)
     private String email;
     private Rol rol;
 

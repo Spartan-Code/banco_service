@@ -31,7 +31,7 @@ public class EntidadBancaria implements Serializable {
     @Pattern(regexp="[0-9]{4}")
     private String codigoEntidad;
     @NotBlank
-    @Size(min = 10, max = 100)
+    @Size(min = 5, max = 100)
     private String direccion;
     @NotBlank
     private String cif;

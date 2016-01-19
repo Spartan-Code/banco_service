@@ -9,6 +9,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -19,10 +23,14 @@ import java.util.Date;
 public class CuentaBancaria implements Serializable{
     
     private int idCuentaBancaria;
+    @NotBlank
+    @Pattern(regexp="[0-9]{10}")
     private String numeroCuenta;
     private BigDecimal saldo;
     private Date fechaCreacion;
+    @NotNull
     private SucursalBancaria sucursalBancaria;
+    @NotNull
     private Usuario usuario;
 
     public CuentaBancaria() {
