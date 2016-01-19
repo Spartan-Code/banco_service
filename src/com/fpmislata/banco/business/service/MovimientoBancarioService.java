@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface MovimientoBancarioService extends GenericService<MovimientoBancario> {
     List<MovimientoBancario> findByNombre(String nombre);
+    List<MovimientoBancario> findByidCuentaBancaria(int idCuentaBancaria);
 }

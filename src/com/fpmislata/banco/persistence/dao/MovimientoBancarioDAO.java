@@ -6,11 +6,12 @@
 package com.fpmislata.banco.persistence.dao;
 
 import com.fpmislata.banco.business.domain.MovimientoBancario;
+import java.util.List;
 
 /**
  *
  * @author Equipo
  */
 public interface MovimientoBancarioDAO extends GenericDAO<MovimientoBancario> {
-    
+    List<MovimientoBancario> findByidCuentaBancaria(int idCuentaBancaria);
 }

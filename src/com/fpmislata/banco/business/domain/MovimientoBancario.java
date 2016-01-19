@@ -9,6 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 /**
  *
@@ -16,13 +19,15 @@ import java.util.Date;
  */
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MovimientoBancario implements Serializable {
-    
-    
+
     private int idMovimientoBancario;
     private Date fecha;
+    @Size(min = 3, max = 100)
     private String concepto;
     private Tipo tipo;
-    private BigDecimal saldo, importe;
+    private BigDecimal saldo;
+    @NotNull
+    private BigDecimal importe;
     private CuentaBancaria cuentaBancaria;
 
     public MovimientoBancario() {
@@ -93,9 +98,5 @@ public class MovimientoBancario implements Serializable {
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
-    
-    
-    
-    
-    
+
 }

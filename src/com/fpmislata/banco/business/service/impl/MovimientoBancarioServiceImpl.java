@@ -34,5 +34,10 @@ public class MovimientoBancarioServiceImpl extends GenericServiceImpl<Movimiento
     public List<MovimientoBancario> findByNombre(String nombre) {
         return null;
     }
+
+    @Override
+    public List<MovimientoBancario> findByidCuentaBancaria(int idCuentaBancaria) {
+        return movimientoBancarioDAO.findByidCuentaBancaria(idCuentaBancaria);
+    }
     
 }

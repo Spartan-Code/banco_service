@@ -22,11 +22,9 @@ public class SucursalBancariaDAOImplHibernate extends GenericDAOImplHibernate<Su
         Session session = sessionFactory.getCurrentSession();
 
         Query query = session.createQuery("SELECT s FROM SucursalBancaria s WHERE s.entidadBancaria.idEntidadBancaria = :idEntidadBancaria");
-        query.setInteger("idEntidadBancaria", idEntidadBancaria);
+        query.setInteger("idEntidadBancaria", idEntidadBancaria);       
 
-        List<SucursalBancaria> sucursalesBancarias = query.list();
-
-        return sucursalesBancarias;
+        return query.list();
 
     }
 
