@@ -8,6 +8,9 @@ package com.fpmislata.banco.business.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -17,9 +20,27 @@ import java.util.Date;
 public class SucursalBancaria implements Serializable {
 
     private int idSucursalBancaria;
-    private String nombre, codigoSucursal, direccion , poblacion, codigoPostal, telefono, email;
+    @NotBlank
+    @Size(min = 5, max = 50)
+    private String nombre;
+    @NotBlank
+    @Pattern(regexp="[0-9]{4}")
+    private String codigoSucursal;
+    @NotBlank
+    @Size(min = 5, max = 100)
+    private String direccion;
+    @NotBlank
+    @Size(min = 5, max = 50)
+    private String poblacion;
+    @NotBlank
+    @Size(min = 5, max = 5)
+    private String codigoPostal;
+    @Size(min = 5, max = 20)
+    private String telefono;
+    @Size(min = 5, max = 100)
+    private String email;
     private Date fechaCreacion;
-    
+
     private EntidadBancaria entidadBancaria;
 
     public SucursalBancaria() {
@@ -118,9 +139,4 @@ public class SucursalBancaria implements Serializable {
         this.entidadBancaria = entidadBancaria;
     }
 
-    
-    
-    
-    
-    
 }
