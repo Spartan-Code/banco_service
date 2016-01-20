@@ -79,4 +79,4 @@ CREATE TABLE `movimientobancario` (
 ENGINE=InnoDB
 ;
 
-INSERT INTO `banco`.`usuario` (`nickName`, `password`, `nombre`, `email`, `rol`) VALUES ('admin', 'Txl6xuMK5cZPex8Z7HpMpbWc65KOIug1WYjYkMs+gsrlO7NxW6IIYGgyIMNXeBZz', 'admin', 'aaaaaaaaaaaaaaaaaaaaaaa@hotmail.com', 'Trabajador');
+INSERT INTO `banco`.`usuario` (`nickName`, `password`, `nombre`, `nif`, `email`, `rol`) VALUES ('admin', 'Txl6xuMK5cZPex8Z7HpMpbWc65KOIug1WYjYkMs+gsrlO7NxW6IIYGgyIMNXeBZz', 'admin', '12345678Z', 'aaaaaaaaaaaaaaaaaaaaaaa@hotmail.com', 'Trabajador');

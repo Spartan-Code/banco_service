@@ -43,10 +43,10 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id)throws BusinessException {
         boolean borrado;
         Session session = sessionFactory.getCurrentSession();
-        
+        try{
         T t = this.get(id);
         if (t == null) {
             borrado = false;
@@ -62,7 +62,9 @@ public class GenericDAOImplHibernate<T> implements GenericDAO<T> {
             
              borrado=true;
         }
-       
+        } catch (org.hibernate.exception.ConstraintViolationException cve) {
+            throw new BusinessException(cve);
+        } 
         return borrado;
     }
 

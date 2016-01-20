@@ -35,19 +35,29 @@ public class BusinessException extends Exception {
     }
 
     public BusinessException(org.hibernate.exception.ConstraintViolationException cve) {
-        
-        SQLException sqlException = cve.getSQLException();
-        if (sqlException.getErrorCode() == 1062 && sqlException.getSQLState().equals("23000")) {
-            Pattern pattern = Pattern.compile("Duplicate entry '(.*)' for key '(.*)'");
 
-            Matcher matcher = pattern.matcher(sqlException.getMessage());
+        SQLException sqlException = cve.getSQLException();
+        Pattern pattern;
+        Matcher matcher;
+        
+        if (sqlException.getErrorCode() == 1062 && sqlException.getSQLState().equals("23000")) {
+            pattern = Pattern.compile("Duplicate entry '(.*)' for key '(.*)'");
+            matcher = pattern.matcher(sqlException.getMessage());
             if (matcher.matches()) {
                 String value = matcher.group(1);
                 String propertyName = matcher.group(2);
-                String message="El valor  "+value+" esta duplicado";
-                businessMessages.add(new BusinessMessage(propertyName+" : "+message,propertyName));
-            } else {
+                String message = "El valor  " + value + " esta duplicado";
+                businessMessages.add(new BusinessMessage(propertyName + " : " + message, propertyName));
+            }
+        }
+        if (sqlException.getErrorCode() == 1451 && sqlException.getSQLState().equals("23000")) {
+            pattern = Pattern.compile("Cannot delete or update a parent row: a foreign key constraint fails \\(`[a-zA-Z]*`.`([a-zA-Z]*)`, CONSTRAINT `[__a-zA-Z]*` FOREIGN KEY \\(`[a-zA-Z]*`\\) REFERENCES `[a-zA-Z]*` \\(`[a-zA-Z]*`\\)\\)");
+            matcher = pattern.matcher(sqlException.getMessage());
+            if (matcher.matches()) {
+                String value = matcher.group(1);
 
+                String message = "El valor no puede ser borrado porque  tiene " + value + " asociadas a el";
+                businessMessages.add(new BusinessMessage(message, ""));
             }
 
 //            String message = "El valor ya existe."+ cve.getLocalizedMessage();
@@ -55,8 +65,6 @@ public class BusinessException extends Exception {
 //            businessMessages.add(new BusinessMessage(message, ""));
         }
     }
-
-    
 
     public BusinessException(String message, String fieldName) {
         BusinessMessage businessMessage = new BusinessMessage(message, fieldName);
