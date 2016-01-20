@@ -34,7 +34,7 @@ public class SucursalBancaria implements Serializable {
     @Size(min = 5, max = 50)
     private String poblacion;
     @NotBlank
-    @Size(min = 5, max = 5)
+    @Pattern(regexp="[0-9]{5}")
     private String codigoPostal;
     @Size(min = 5, max = 20)
     private String telefono;
