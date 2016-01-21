@@ -50,6 +50,7 @@ ENGINE=InnoDB
 CREATE TABLE `cuentabancaria` (
 	`idCuentaBancaria` INT(11) NOT NULL AUTO_INCREMENT,
 	`numeroCuenta` VARCHAR(10) NULL DEFAULT NULL,
+        `digitoControl` VARCHAR(10) NULL DEFAULT NULL,
 	`fechaCreacion` DATE NULL DEFAULT NULL,
 	`saldo` DECIMAL(20,2) NULL DEFAULT NULL,
 	`idSucursalBancaria` INT(11) NULL DEFAULT NULL,

@@ -26,6 +26,7 @@ public class CuentaBancaria implements Serializable{
     @NotBlank
     @Pattern(regexp="[0-9]{10}")
     private String numeroCuenta;
+    private String digitoControl;
     private BigDecimal saldo;
     private Date fechaCreacion;
     @NotNull
@@ -36,14 +37,25 @@ public class CuentaBancaria implements Serializable{
     public CuentaBancaria() {
     }
 
-    public CuentaBancaria(int idCuentaBancaria, String numeroCuenta, BigDecimal saldo, Date fechaCreacion, SucursalBancaria sucursalBancaria, Usuario usuario) {
+    public CuentaBancaria(int idCuentaBancaria, String numeroCuenta, String digitoControl, BigDecimal saldo, Date fechaCreacion, SucursalBancaria sucursalBancaria, Usuario usuario) {
         this.idCuentaBancaria = idCuentaBancaria;
         this.numeroCuenta = numeroCuenta;
+        this.digitoControl = digitoControl;
         this.saldo = saldo;
         this.fechaCreacion = fechaCreacion;
         this.sucursalBancaria = sucursalBancaria;
         this.usuario = usuario;
     }
+
+    public String getDigitoControl() {
+        return digitoControl;
+    }
+
+    public void setDigitoControl(String digitoControl) {
+        this.digitoControl = digitoControl;
+    }
+
+    
 
     public int getIdCuentaBancaria() {
         return idCuentaBancaria;

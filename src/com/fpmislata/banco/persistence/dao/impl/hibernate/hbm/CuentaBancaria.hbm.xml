@@ -3,7 +3,8 @@
 <hibernate-mapping>
     <class name="com.fpmislata.banco.business.domain.CuentaBancaria" table="cuentabancaria" >
         <id  name="idCuentaBancaria" type="integer" />
-        <property  name="numeroCuenta" type="string" unique="true" />        
+        <property  name="numeroCuenta" type="string" unique="true" />
+        <property  name="digitoControl" type="string"  />          
         <property name="fechaCreacion" />
         <property  name="saldo" type="big_decimal"  />
         
