@@ -20,7 +20,7 @@ public class CuentaBancariaDAOImplHibernate extends GenericDAOImplHibernate<Cuen
     public CuentaBancaria findByNumeroCuenta(String numeroCuenta) {
         Session session = sessionFactory.getCurrentSession();
 
-        Query query = session.createQuery("SELECT c FROM CuentaBancaria c WHERE c.numeroCuenta = :numeroCuenta");
+        Query query = session.createQuery("SELECT cb FROM CuentaBancaria cb WHERE cb.numeroCuenta = :numeroCuenta");
         query.setString("numeroCuenta", numeroCuenta);
 
         CuentaBancaria cuentaBancaria = (CuentaBancaria) query.uniqueResult();
