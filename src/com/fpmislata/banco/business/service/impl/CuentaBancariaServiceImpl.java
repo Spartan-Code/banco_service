@@ -6,11 +6,16 @@
 package com.fpmislata.banco.business.service.impl;
 
 import com.fpmislata.banco.business.domain.CuentaBancaria;
+import com.fpmislata.banco.business.domain.MovimientoBancario;
 import com.fpmislata.banco.business.domain.SucursalBancaria;
+import com.fpmislata.banco.business.domain.Tipo;
+import com.fpmislata.banco.business.domain.Transaccion;
 import com.fpmislata.banco.business.service.CuentaBancariaService;
+import com.fpmislata.banco.business.service.MovimientoBancarioService;
 import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.CuentaBancariaDAO;
 import com.fpmislata.banco.persistence.dao.SucursalBancariaDAO;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +34,9 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     @Autowired
     SucursalBancariaDAO sucursalBancariaDAO;
 
+    @Autowired
+    MovimientoBancarioService movimientoBancarioService;
+
     public CuentaBancariaServiceImpl() {
     }
 
@@ -40,6 +48,39 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     @Override
     public CuentaBancaria findByNumeroCuenta(String numeroCuenta) {
         return cuentaBancariaDAO.findByNumeroCuenta(numeroCuenta);
+    }
+
+    @Override
+    public void doTransaccion(Transaccion transaccion) throws BusinessException {
+        String numeroCuentaOrigen = transaccion.getCuentaOrigen().substring(10);
+        String numeroCuentaDestino = transaccion.getCuentaDestino().substring(10);
+
+        CuentaBancaria cuentaBancariaOrigen = this.findByNumeroCuenta(numeroCuentaOrigen);
+        CuentaBancaria cuentaBancariaDestino = this.findByNumeroCuenta(numeroCuentaDestino);
+
+        if (cuentaBancariaOrigen == null) {
+            throw new BusinessException("El numero de cuenta origen no existe", "cuentaOrigen");
+        }
+
+        if (cuentaBancariaDestino == null) {
+            throw new BusinessException("El numero de cuenta destino no existe", "cuentaDestino");
+        }
+
+        MovimientoBancario movimientoBancarioCuentaOrigen = new MovimientoBancario();
+        movimientoBancarioCuentaOrigen.setFecha(new Date());
+        movimientoBancarioCuentaOrigen.setConcepto(transaccion.getConcepto());
+        movimientoBancarioCuentaOrigen.setTipo(Tipo.Debe);
+        movimientoBancarioCuentaOrigen.setImporte(transaccion.getImporte());
+        movimientoBancarioCuentaOrigen.setCuentaBancaria(cuentaBancariaOrigen);
+        movimientoBancarioService.insert(movimientoBancarioCuentaOrigen);
+
+        MovimientoBancario movimientoBancarioCuentaDestino = new MovimientoBancario();
+        movimientoBancarioCuentaDestino.setFecha(new Date());
+        movimientoBancarioCuentaDestino.setConcepto(transaccion.getConcepto());
+        movimientoBancarioCuentaDestino.setTipo(Tipo.Haber);
+        movimientoBancarioCuentaDestino.setImporte(transaccion.getImporte());
+        movimientoBancarioCuentaDestino.setCuentaBancaria(cuentaBancariaDestino);
+        movimientoBancarioService.insert(movimientoBancarioCuentaDestino);
     }
 
     @Override
@@ -118,4 +159,5 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
         return dc;
 
     }
+
 }
