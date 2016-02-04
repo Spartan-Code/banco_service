@@ -63,7 +63,7 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
         if (cccDestino == null) {
             throw new BusinessException("No se ha especificado una cuenta de destino", "cuentaDestino");
         }
-        
+
         matcher = patternCCC.matcher(cccOrigen);
         if (!matcher.matches()) {
             throw new BusinessException("La cuenta origen debe contener 20 digitos", "cuentaOrigen");
@@ -86,6 +86,23 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
 
         if (cuentaBancariaDestino == null) {
             throw new BusinessException("El numero de cuenta destino no existe", "cuentaDestino");
+        }
+
+        String cccCuentaBancariaOrigen = cuentaBancariaOrigen.getSucursalBancaria().getEntidadBancaria().getCodigoEntidad()
+                + cuentaBancariaOrigen.getSucursalBancaria().getCodigoSucursal()
+                + cuentaBancariaOrigen.getDigitoControl()
+                + cuentaBancariaOrigen.getNumeroCuenta();
+
+        String cccCuentaBancariaDestino = cuentaBancariaDestino.getSucursalBancaria().getEntidadBancaria().getCodigoEntidad()
+                + cuentaBancariaDestino.getSucursalBancaria().getCodigoSucursal()
+                + cuentaBancariaDestino.getDigitoControl()
+                + cuentaBancariaDestino.getNumeroCuenta();
+
+        if (!(cccCuentaBancariaOrigen.equals(cccOrigen))) {
+            throw new BusinessException("CCC origen incorrecto", "cuentaOrigen");
+        }
+        if (!(cccCuentaBancariaDestino.equals(cccDestino))) {
+            throw new BusinessException("CCC destino incorrecto", "cuentaDestino");
         }
 
         MovimientoBancario movimientoBancarioCuentaOrigen = new MovimientoBancario();
