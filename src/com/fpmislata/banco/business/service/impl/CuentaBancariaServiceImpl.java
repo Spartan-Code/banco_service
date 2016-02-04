@@ -52,11 +52,33 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
 
     @Override
     public void doTransaccion(Transaccion transaccion) throws BusinessException {
-        String numeroCuentaOrigen = transaccion.getCuentaOrigen().substring(10);
-        String numeroCuentaDestino = transaccion.getCuentaDestino().substring(10);
+        String cccOrigen = transaccion.getCuentaOrigen();
+        String cccDestino = transaccion.getCuentaDestino();
+        Pattern patternCCC = Pattern.compile("[0-9]{20}");
+        Matcher matcher;
 
-        CuentaBancaria cuentaBancariaOrigen = this.findByNumeroCuenta(numeroCuentaOrigen);
-        CuentaBancaria cuentaBancariaDestino = this.findByNumeroCuenta(numeroCuentaDestino);
+        if (cccOrigen == null) {
+            throw new BusinessException("No se ha especificado una cuenta de origen", "cuentaOrigen");
+        }
+        if (cccDestino == null) {
+            throw new BusinessException("No se ha especificado una cuenta de destino", "cuentaDestino");
+        }
+        
+        matcher = patternCCC.matcher(cccOrigen);
+        if (!matcher.matches()) {
+            throw new BusinessException("La cuenta origen debe contener 20 digitos", "cuentaOrigen");
+        }
+        matcher = patternCCC.matcher(cccDestino);
+        if (!matcher.matches()) {
+            throw new BusinessException("La cuenta destino debe contener 20 digitos", "cuentaDestino");
+        }
+
+        if (cccDestino.equals(cccOrigen)) {
+            throw new BusinessException("La cuenta de origen no puede ser la misma que la cuenta destino", "cuentaDestino");
+        }
+
+        CuentaBancaria cuentaBancariaOrigen = this.findByNumeroCuenta(cccOrigen.substring(10));
+        CuentaBancaria cuentaBancariaDestino = this.findByNumeroCuenta(cccDestino.substring(10));
 
         if (cuentaBancariaOrigen == null) {
             throw new BusinessException("El numero de cuenta origen no existe", "cuentaOrigen");

@@ -2,10 +2,8 @@
  <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="com.fpmislata.banco.business.domain.MovimientoBancario" table="movimientobancario" >
-        <id name="idMovimientoBancario" type="integer" >  
-            <generator class="increment" />
-        </id>
-        
+        <id name="idMovimientoBancario" type="integer" />  
+
         <property name="fecha" />
         <property  name="concepto"  />
         <property name="tipo">
