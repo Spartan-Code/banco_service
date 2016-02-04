@@ -18,13 +18,12 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author Equipo
  */
-
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class CuentaBancaria implements Serializable{
-    
+public class CuentaBancaria implements Serializable {
+
     private int idCuentaBancaria;
     @NotBlank
-    @Pattern(regexp="[0-9]{10}")
+    @Pattern(regexp = "[0-9]{10}")
     private String numeroCuenta;
     private String digitoControl;
     private BigDecimal saldo;
@@ -33,11 +32,14 @@ public class CuentaBancaria implements Serializable{
     private SucursalBancaria sucursalBancaria;
     @NotNull
     private Usuario usuario;
+    @NotBlank
+    @Pattern(regexp = "[0-9]{4}")
+    private String pin;
 
     public CuentaBancaria() {
     }
 
-    public CuentaBancaria(int idCuentaBancaria, String numeroCuenta, String digitoControl, BigDecimal saldo, Date fechaCreacion, SucursalBancaria sucursalBancaria, Usuario usuario) {
+    public CuentaBancaria(int idCuentaBancaria, String numeroCuenta, String digitoControl, BigDecimal saldo, Date fechaCreacion, SucursalBancaria sucursalBancaria, Usuario usuario, String pin) {
         this.idCuentaBancaria = idCuentaBancaria;
         this.numeroCuenta = numeroCuenta;
         this.digitoControl = digitoControl;
@@ -45,6 +47,7 @@ public class CuentaBancaria implements Serializable{
         this.fechaCreacion = fechaCreacion;
         this.sucursalBancaria = sucursalBancaria;
         this.usuario = usuario;
+        this.pin = pin;
     }
 
     public String getDigitoControl() {
@@ -54,8 +57,6 @@ public class CuentaBancaria implements Serializable{
     public void setDigitoControl(String digitoControl) {
         this.digitoControl = digitoControl;
     }
-
-    
 
     public int getIdCuentaBancaria() {
         return idCuentaBancaria;
@@ -104,8 +105,13 @@ public class CuentaBancaria implements Serializable{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
-    
-    
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
 }

@@ -7,7 +7,7 @@
         <property  name="digitoControl" type="string"  />          
         <property name="fechaCreacion" />
         <property  name="saldo" type="big_decimal"  />
-        
+        <property  name="pin" type="string" />
         
         
         <many-to-one name="sucursalBancaria" >

@@ -105,6 +105,13 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
             throw new BusinessException("CCC destino incorrecto", "cuentaDestino");
         }
 
+        if (transaccion.getPin() == null) {
+            throw new BusinessException("No se ha especificado un pin", "pin");
+        }
+        if (!(transaccion.getPin().equals(cuentaBancariaDestino.getPin()))) {
+            throw new BusinessException("Pin de la cuenta destino incorrecto", "pin");
+        }
+
         MovimientoBancario movimientoBancarioCuentaOrigen = new MovimientoBancario();
         movimientoBancarioCuentaOrigen.setFecha(new Date());
         movimientoBancarioCuentaOrigen.setConcepto(transaccion.getConcepto());
