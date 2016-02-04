@@ -11,6 +11,7 @@ import com.fpmislata.banco.business.service.CuentaBancariaService;
 import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.CuentaBancariaDAO;
 import com.fpmislata.banco.persistence.dao.SucursalBancariaDAO;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -39,6 +40,11 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     @Override
     public CuentaBancaria findByNumeroCuenta(String numeroCuenta) {
         return cuentaBancariaDAO.findByNumeroCuenta(numeroCuenta);
+    }
+
+    @Override
+    public List<CuentaBancaria> findByNombre(String nombre) {
+        return null;
     }
 
     @Override

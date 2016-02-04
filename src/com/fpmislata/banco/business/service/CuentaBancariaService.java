@@ -6,12 +6,15 @@
 package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.CuentaBancaria;
+import java.util.List;
 
 /**
  *
  * @author PEDRO DEL BARRIO
  */
 public interface CuentaBancariaService extends GenericService<CuentaBancaria> {
+
+    List<CuentaBancaria> findByNombre(String nombre);
 
     CuentaBancaria findByNumeroCuenta(String numeroCuenta);
 }
