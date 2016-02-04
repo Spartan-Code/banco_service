@@ -55,7 +55,7 @@ public class MovimientoBancarioServiceImpl extends GenericServiceImpl<Movimiento
         if(movimientoBancario.getImporte()==null){
             throw new BusinessException("El campo Importe tiene contenido no valido","Importe");
         }else{
-        CuentaBancaria cuentaBancaria= movimientoBancario.getCuentaBancaria();
+        CuentaBancaria cuentaBancaria= cuentaBancariaDAO.get(movimientoBancario.getCuentaBancaria().getIdCuentaBancaria());
         
         if(movimientoBancario.getTipo() == Tipo.Debe){
             cuentaBancaria.setSaldo(cuentaBancaria.getSaldo().subtract(movimientoBancario.getImporte()));
