@@ -9,8 +9,9 @@ import com.fpmislata.banco.business.domain.CuentaBancaria;
 
 /**
  *
- * @author Equipo
+ * @author PEDRO DEL BARRIO
  */
 public interface CuentaBancariaDAO extends GenericDAO<CuentaBancaria> {
-    
+
+    CuentaBancaria findByNumeroCuenta(String numeroCuenta);
 }

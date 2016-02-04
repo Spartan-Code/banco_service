@@ -11,7 +11,6 @@ import com.fpmislata.banco.business.service.CuentaBancariaService;
 import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.CuentaBancariaDAO;
 import com.fpmislata.banco.persistence.dao.SucursalBancariaDAO;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
@@ -38,35 +37,34 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     }
 
     @Override
-    public List<CuentaBancaria> findByNombre(String nombre) {
-        return null;
+    public CuentaBancaria findByNumeroCuenta(String numeroCuenta) {
+        return cuentaBancariaDAO.findByNumeroCuenta(numeroCuenta);
     }
 
     @Override
     public CuentaBancaria insert(CuentaBancaria cuentaBancaria) throws BusinessException {
-        if(cuentaBancaria.getNumeroCuenta() == null){
-            throw new BusinessException("El numero de cuenta no puede estar vacio","numeroCuenta");
+        if (cuentaBancaria.getNumeroCuenta() == null) {
+            throw new BusinessException("El numero de cuenta no puede estar vacio", "numeroCuenta");
         }
         Pattern patternCuentaEntidad = Pattern.compile("[0-9]{10}");
         Matcher matcher = patternCuentaEntidad.matcher(cuentaBancaria.getNumeroCuenta());
-            if (!matcher.matches()) {
-               throw new BusinessException("El numero de cuenta debe contener diez digitos", "numeroCuenta");
-            }else{
-                if(cuentaBancaria.getSucursalBancaria() == null){
-                    throw new BusinessException("Debes seleccionar una sucursal bancaria","sucursalBancaria");
-                }
-        SucursalBancaria sucursalBancaria = sucursalBancariaDAO.get(cuentaBancaria.getSucursalBancaria().getIdSucursalBancaria());
-
-        String digitoControl = this.calcularDigitoControl(sucursalBancaria.getEntidadBancaria().getCodigoEntidad(), sucursalBancaria.getCodigoSucursal(), cuentaBancaria.getNumeroCuenta());
-        cuentaBancaria.setDigitoControl(digitoControl);
-        return cuentaBancariaDAO.insert(cuentaBancaria);
+        if (!matcher.matches()) {
+            throw new BusinessException("El numero de cuenta debe contener diez digitos", "numeroCuenta");
+        } else {
+            if (cuentaBancaria.getSucursalBancaria() == null) {
+                throw new BusinessException("Debes seleccionar una sucursal bancaria", "sucursalBancaria");
             }
+            SucursalBancaria sucursalBancaria = sucursalBancariaDAO.get(cuentaBancaria.getSucursalBancaria().getIdSucursalBancaria());
+
+            String digitoControl = this.calcularDigitoControl(sucursalBancaria.getEntidadBancaria().getCodigoEntidad(), sucursalBancaria.getCodigoSucursal(), cuentaBancaria.getNumeroCuenta());
+            cuentaBancaria.setDigitoControl(digitoControl);
+            return cuentaBancariaDAO.insert(cuentaBancaria);
+        }
 
     }
 
     public String calcularDigitoControl(String codigoEntidadBancaria, String codigoSucursalBancaria, String codigoCuentaBancaria) throws BusinessException {
-        
-        
+
         int dc1 = 0;
 
         dc1 = dc1 + Integer.parseInt(codigoEntidadBancaria.substring(0, 1)) * 4;
