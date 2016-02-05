@@ -3,7 +3,7 @@
 <hibernate-mapping>
     <class name="com.fpmislata.banco.business.domain.MovimientoBancario" table="movimientobancario" >
         <id name="idMovimientoBancario" type="integer">
-            <generator class="increment" />
+            <generator class="identity" />
         </id>
 
         <property name="fecha" />
