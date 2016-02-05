@@ -6,12 +6,19 @@
 package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.CuentaBancaria;
+import com.fpmislata.banco.business.domain.Transaccion;
+import com.fpmislata.banco.core.BusinessException;
 import java.util.List;
 
 /**
  *
- * @author Equipo
+ * @author PEDRO DEL BARRIO
  */
 public interface CuentaBancariaService extends GenericService<CuentaBancaria> {
+
     List<CuentaBancaria> findByNombre(String nombre);
+
+    CuentaBancaria findByNumeroCuenta(String numeroCuenta);
+
+    void doTransaccion(Transaccion transaccion) throws BusinessException;
 }

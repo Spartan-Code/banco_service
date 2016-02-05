@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 
 /**
  *
@@ -42,6 +42,11 @@ public class MovimientoBancario implements Serializable {
         this.saldo = saldo;
         this.importe = importe;
         this.cuentaBancaria = cuentaBancaria;
+    }
+
+    @AssertTrue(message = "El importe debe ser mayor que 0")
+    private boolean isImportePositivo() {
+        return importe.floatValue() > 0;
     }
 
     public int getIdMovimientoBancario() {
