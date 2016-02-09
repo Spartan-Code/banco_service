@@ -7,6 +7,7 @@ package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.CuentaBancaria;
 import com.fpmislata.banco.business.domain.Pago;
+import com.fpmislata.banco.business.domain.Tipo;
 import com.fpmislata.banco.business.domain.Transaccion;
 import com.fpmislata.banco.core.BusinessException;
 import java.util.List;
@@ -23,5 +24,5 @@ public interface CuentaBancariaService extends GenericService<CuentaBancaria> {
 
     void doTransaccion(Transaccion transaccion) throws BusinessException;
     
-    void retirarDinero(Pago pago)throws BusinessException;
+    void retirarDinero(Pago pago,Tipo tipo)throws BusinessException;
 }

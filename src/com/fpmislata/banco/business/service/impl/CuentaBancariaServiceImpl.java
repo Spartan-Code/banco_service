@@ -191,7 +191,7 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     }
 
     @Override
-    public void retirarDinero(Pago pago) throws BusinessException {
+    public void retirarDinero(Pago pago, Tipo tipo) throws BusinessException {
 
         CuentaBancaria cuentaBancaria = this.findByNumeroCuenta(pago.getCodigoCuentaCliente());
 
@@ -203,7 +203,7 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
         MovimientoBancario movimientoBancario = new MovimientoBancario();
         movimientoBancario.setFecha(new Date());
         movimientoBancario.setConcepto(pago.getConcepto());
-        movimientoBancario.setTipo(Tipo.Debe);
+        movimientoBancario.setTipo(tipo);
         movimientoBancario.setImporte(pago.getImporte());
         movimientoBancario.setCuentaBancaria(cuentaBancaria);
         movimientoBancarioService.insert(movimientoBancario);
