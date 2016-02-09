@@ -13,8 +13,11 @@ import com.fpmislata.banco.business.domain.Transaccion;
 import com.fpmislata.banco.business.service.CuentaBancariaService;
 import com.fpmislata.banco.business.service.MovimientoBancarioService;
 import com.fpmislata.banco.core.BusinessException;
+import com.fpmislata.banco.core.BusinessMessage;
 import com.fpmislata.banco.persistence.dao.CuentaBancariaDAO;
 import com.fpmislata.banco.persistence.dao.SucursalBancariaDAO;
+import com.fpmislata.banco.util.ValidadorCCC;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,65 +49,45 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     }
 
     @Override
-    public CuentaBancaria findByNumeroCuenta(String numeroCuenta) {
-        return cuentaBancariaDAO.findByNumeroCuenta(numeroCuenta);
+    public CuentaBancaria findByNumeroCuenta(String ccc) throws BusinessException {
+
+        Pattern patternCCC = Pattern.compile("[0-9]{20}");
+        
+
+        if (ccc == null) {
+            throw new BusinessException("No se ha especificado una cuenta", "CCC");
+        }
+        Matcher matcher = patternCCC.matcher(ccc);
+        if (!matcher.matches()) {
+            throw new BusinessException("La cuenta debe contener 20 digitos", "CCC");
+        }
+
+        return cuentaBancariaDAO.findByNumeroCuenta(ccc.substring(10));
     }
 
     @Override
     public void doTransaccion(Transaccion transaccion) throws BusinessException {
         String cccOrigen = transaccion.getCuentaOrigen();
         String cccDestino = transaccion.getCuentaDestino();
-        Pattern patternCCC = Pattern.compile("[0-9]{20}");
-        Matcher matcher;
+        ValidadorCCC validadorCCC = new ValidadorCCC();
 
-        if (cccOrigen == null) {
-            throw new BusinessException("No se ha especificado una cuenta de origen", "cuentaOrigen");
-        }
-        if (cccDestino == null) {
-            throw new BusinessException("No se ha especificado una cuenta de destino", "cuentaDestino");
-        }
-
-        matcher = patternCCC.matcher(cccOrigen);
-        if (!matcher.matches()) {
-            throw new BusinessException("La cuenta origen debe contener 20 digitos", "cuentaOrigen");
-        }
-        matcher = patternCCC.matcher(cccDestino);
-        if (!matcher.matches()) {
-            throw new BusinessException("La cuenta destino debe contener 20 digitos", "cuentaDestino");
-        }
+        CuentaBancaria cuentaBancariaOrigen = this.findByNumeroCuenta(cccOrigen);
+        CuentaBancaria cuentaBancariaDestino = this.findByNumeroCuenta(cccDestino);
 
         if (cccDestino.equals(cccOrigen)) {
             throw new BusinessException("La cuenta de origen no puede ser la misma que la cuenta destino", "cuentaDestino");
         }
 
-        CuentaBancaria cuentaBancariaOrigen = this.findByNumeroCuenta(cccOrigen.substring(10));
-        CuentaBancaria cuentaBancariaDestino = this.findByNumeroCuenta(cccDestino.substring(10));
-
-        if (cuentaBancariaOrigen == null) {
-            throw new BusinessException("El numero de cuenta origen no existe", "cuentaOrigen");
+        List<BusinessMessage> businessMessagesOrigen = validadorCCC.validarCCC(cccOrigen, cuentaBancariaOrigen);
+        if(!businessMessagesOrigen.isEmpty()){
+            throw new BusinessException(businessMessagesOrigen);
         }
-
-        if (cuentaBancariaDestino == null) {
-            throw new BusinessException("El numero de cuenta destino no existe", "cuentaDestino");
+        
+        List<BusinessMessage> businessMessagesDestino = validadorCCC.validarCCC(cccDestino, cuentaBancariaDestino);
+        if(!businessMessagesDestino.isEmpty()){
+            throw new BusinessException(businessMessagesDestino);
         }
-
-        String cccCuentaBancariaOrigen = cuentaBancariaOrigen.getSucursalBancaria().getEntidadBancaria().getCodigoEntidad()
-                + cuentaBancariaOrigen.getSucursalBancaria().getCodigoSucursal()
-                + cuentaBancariaOrigen.getDigitoControl()
-                + cuentaBancariaOrigen.getNumeroCuenta();
-
-        String cccCuentaBancariaDestino = cuentaBancariaDestino.getSucursalBancaria().getEntidadBancaria().getCodigoEntidad()
-                + cuentaBancariaDestino.getSucursalBancaria().getCodigoSucursal()
-                + cuentaBancariaDestino.getDigitoControl()
-                + cuentaBancariaDestino.getNumeroCuenta();
-
-        if (!(cccCuentaBancariaOrigen.equals(cccOrigen))) {
-            throw new BusinessException("CCC origen incorrecto", "cuentaOrigen");
-        }
-        if (!(cccCuentaBancariaDestino.equals(cccDestino))) {
-            throw new BusinessException("CCC destino incorrecto", "cuentaDestino");
-        }
-
+        
         if (transaccion.getPin() == null) {
             throw new BusinessException("No se ha especificado un pin", "pin");
         }

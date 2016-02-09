@@ -18,7 +18,7 @@ public interface CuentaBancariaService extends GenericService<CuentaBancaria> {
 
     List<CuentaBancaria> findByNombre(String nombre);
 
-    CuentaBancaria findByNumeroCuenta(String numeroCuenta);
+    CuentaBancaria findByNumeroCuenta(String numeroCuenta)throws BusinessException;
 
     void doTransaccion(Transaccion transaccion) throws BusinessException;
 }
