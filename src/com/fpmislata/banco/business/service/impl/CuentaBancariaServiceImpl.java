@@ -7,6 +7,7 @@ package com.fpmislata.banco.business.service.impl;
 
 import com.fpmislata.banco.business.domain.CuentaBancaria;
 import com.fpmislata.banco.business.domain.MovimientoBancario;
+import com.fpmislata.banco.business.domain.Pago;
 import com.fpmislata.banco.business.domain.SucursalBancaria;
 import com.fpmislata.banco.business.domain.Tipo;
 import com.fpmislata.banco.business.domain.Transaccion;
@@ -17,7 +18,6 @@ import com.fpmislata.banco.core.BusinessMessage;
 import com.fpmislata.banco.persistence.dao.CuentaBancariaDAO;
 import com.fpmislata.banco.persistence.dao.SucursalBancariaDAO;
 import com.fpmislata.banco.util.ValidadorCCC;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,7 +40,10 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     @Autowired
     MovimientoBancarioService movimientoBancarioService;
 
+    ValidadorCCC validadorCCC;
+
     public CuentaBancariaServiceImpl() {
+        validadorCCC = new ValidadorCCC();
     }
 
     @PostConstruct
@@ -52,7 +55,6 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     public CuentaBancaria findByNumeroCuenta(String ccc) throws BusinessException {
 
         Pattern patternCCC = Pattern.compile("[0-9]{20}");
-        
 
         if (ccc == null) {
             throw new BusinessException("No se ha especificado una cuenta", "CCC");
@@ -69,7 +71,6 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     public void doTransaccion(Transaccion transaccion) throws BusinessException {
         String cccOrigen = transaccion.getCuentaOrigen();
         String cccDestino = transaccion.getCuentaDestino();
-        ValidadorCCC validadorCCC = new ValidadorCCC();
 
         CuentaBancaria cuentaBancariaOrigen = this.findByNumeroCuenta(cccOrigen);
         CuentaBancaria cuentaBancariaDestino = this.findByNumeroCuenta(cccDestino);
@@ -79,15 +80,15 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
         }
 
         List<BusinessMessage> businessMessagesOrigen = validadorCCC.validarCCC(cccOrigen, cuentaBancariaOrigen);
-        if(!businessMessagesOrigen.isEmpty()){
+        if (!businessMessagesOrigen.isEmpty()) {
             throw new BusinessException(businessMessagesOrigen);
         }
-        
+
         List<BusinessMessage> businessMessagesDestino = validadorCCC.validarCCC(cccDestino, cuentaBancariaDestino);
-        if(!businessMessagesDestino.isEmpty()){
+        if (!businessMessagesDestino.isEmpty()) {
             throw new BusinessException(businessMessagesDestino);
         }
-        
+
         if (transaccion.getPin() == null) {
             throw new BusinessException("No se ha especificado un pin", "pin");
         }
@@ -186,6 +187,26 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
         String dc = String.valueOf(dc1) + String.valueOf(dc2);
 
         return dc;
+
+    }
+
+    @Override
+    public void retirarDinero(Pago pago) throws BusinessException {
+
+        CuentaBancaria cuentaBancaria = this.findByNumeroCuenta(pago.getCodigoCuentaCliente());
+
+        List<BusinessMessage> businessMessages = validadorCCC.validarCCC(pago.getCodigoCuentaCliente(), cuentaBancaria);
+        if (!businessMessages.isEmpty()) {
+            throw new BusinessException(businessMessages);
+        }
+
+        MovimientoBancario movimientoBancario = new MovimientoBancario();
+        movimientoBancario.setFecha(new Date());
+        movimientoBancario.setConcepto(pago.getConcepto());
+        movimientoBancario.setTipo(Tipo.Debe);
+        movimientoBancario.setImporte(pago.getImporte());
+        movimientoBancario.setCuentaBancaria(cuentaBancaria);
+        movimientoBancarioService.insert(movimientoBancario);
 
     }
 
