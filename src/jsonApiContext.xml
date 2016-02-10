@@ -9,6 +9,6 @@
   
     <context:annotation-config/>
   
-    <bean class="com.fpmislata.presentacion.json.impl.JsonTransformerImplJackson" />
+    <bean class="com.fpmislata.banco.util.json.impl.JsonTransformerImplJackson" />
  
 </beans>
