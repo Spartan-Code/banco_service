@@ -5,7 +5,6 @@
  */
 package com.fpmislata.banco.security.impl;
 
-import com.fpmislata.banco.business.domain.Rol;
 import com.fpmislata.banco.business.domain.Usuario;
 import com.fpmislata.banco.security.Authorization;
 
@@ -15,22 +14,18 @@ import com.fpmislata.banco.security.Authorization;
  */
 public class AuthorizationImpDummy implements Authorization {
 
-
     @Override
     public boolean isAuthorizedURL(Usuario usuario, String url, String metodo) {
-        if(url.equalsIgnoreCase("/banco_api/api/login")){
-         return true;
-        }else{
+        if (url.equalsIgnoreCase("/banco_api/api/login")) {
+            return true;
+        } else {
             return true;
         }
-        
-        
+
 //        if(usuario.getRol()== Rol.Trabajador ){
 //         return true;
 //        }else{
 //            return true;
 //        }
-        
-        
     }
 }
