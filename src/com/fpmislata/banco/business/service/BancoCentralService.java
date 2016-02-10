@@ -6,6 +6,7 @@
 package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.CredencialesBancarias;
+import com.fpmislata.banco.core.BusinessException;
 
 /**
  *
@@ -13,6 +14,6 @@ import com.fpmislata.banco.business.domain.CredencialesBancarias;
  */
 public interface BancoCentralService {
     
-    CredencialesBancarias getURLbyCCC(String ccc);
+    CredencialesBancarias getURLbyCCC(String ccc)throws BusinessException;
     
 }

@@ -6,9 +6,6 @@
 package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.CuentaBancaria;
-import com.fpmislata.banco.business.domain.Extraccion;
-import com.fpmislata.banco.business.domain.Tipo;
-import com.fpmislata.banco.business.domain.Transaccion;
 import com.fpmislata.banco.core.BusinessException;
 import java.util.List;
 
