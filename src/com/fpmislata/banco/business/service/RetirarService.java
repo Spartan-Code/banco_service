@@ -7,20 +7,17 @@ package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.CuentaBancaria;
 import com.fpmislata.banco.business.domain.Extraccion;
-import com.fpmislata.banco.business.domain.Tipo;
-import com.fpmislata.banco.business.domain.Transaccion;
 import com.fpmislata.banco.core.BusinessException;
-import java.util.List;
+import java.math.BigDecimal;
 
 /**
  *
- * @author PEDRO DEL BARRIO
+ * @author German
  */
-public interface CuentaBancariaService extends GenericService<CuentaBancaria> {
-
-    List<CuentaBancaria> findByNombre(String nombre);
-
-    CuentaBancaria findByCCC(String numeroCuenta) throws BusinessException;
-
+public interface RetirarService {
     
+    
+    void insert(Extraccion pago)throws BusinessException;
+    
+    void insertMovimientoDebe(String concepto, BigDecimal importe , CuentaBancaria cuentaBancaria)throws BusinessException;
 }

@@ -7,7 +7,7 @@ package com.fpmislata.banco.business.service.impl;
 
 import com.fpmislata.banco.business.domain.CuentaBancaria;
 import com.fpmislata.banco.business.domain.MovimientoBancario;
-import com.fpmislata.banco.business.domain.Pago;
+import com.fpmislata.banco.business.domain.Extraccion;
 import com.fpmislata.banco.business.domain.SucursalBancaria;
 import com.fpmislata.banco.business.domain.Tipo;
 import com.fpmislata.banco.business.domain.Transaccion;
@@ -17,7 +17,6 @@ import com.fpmislata.banco.core.BusinessException;
 import com.fpmislata.banco.core.BusinessMessage;
 import com.fpmislata.banco.persistence.dao.CuentaBancariaDAO;
 import com.fpmislata.banco.persistence.dao.SucursalBancariaDAO;
-import com.fpmislata.banco.util.ValidadorCCC;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,10 +39,9 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     @Autowired
     MovimientoBancarioService movimientoBancarioService;
 
-    ValidadorCCC validadorCCC;
+   
 
     public CuentaBancariaServiceImpl() {
-        validadorCCC = new ValidadorCCC();
     }
 
     @PostConstruct
@@ -52,7 +50,7 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
     }
 
     @Override
-    public CuentaBancaria findByNumeroCuenta(String ccc) throws BusinessException {
+    public CuentaBancaria findByCCC(String ccc) throws BusinessException {
 
         Pattern patternCCC = Pattern.compile("[0-9]{20}");
 
@@ -64,53 +62,23 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
             throw new BusinessException("La cuenta debe contener 20 digitos", "CCC");
         }
 
-        return cuentaBancariaDAO.findByNumeroCuenta(ccc.substring(10));
-    }
+        CuentaBancaria cuentaBancaria = cuentaBancariaDAO.findByNumeroCuenta(ccc.substring(10));
 
-    @Override
-    public void doTransaccion(Transaccion transaccion) throws BusinessException {
-        String cccOrigen = transaccion.getCuentaOrigen();
-        String cccDestino = transaccion.getCuentaDestino();
+        if (cuentaBancaria == null) {
+            throw new BusinessException("El numero de cuenta origen no existe", "CCC");
 
-        CuentaBancaria cuentaBancariaOrigen = this.findByNumeroCuenta(cccOrigen);
-        CuentaBancaria cuentaBancariaDestino = this.findByNumeroCuenta(cccDestino);
+        } else {
+            String cccCuentaBaseDatos = cuentaBancaria.getSucursalBancaria().getEntidadBancaria().getCodigoEntidad()
+                    + cuentaBancaria.getSucursalBancaria().getCodigoSucursal()
+                    + cuentaBancaria.getDigitoControl()
+                    + cuentaBancaria.getNumeroCuenta();
+            if (!(cccCuentaBaseDatos.equals(ccc))) {
+                throw new BusinessException("CCC  incorrecto", "CCC");
 
-        if (cccDestino.equals(cccOrigen)) {
-            throw new BusinessException("La cuenta de origen no puede ser la misma que la cuenta destino", "cuentaDestino");
+            }
         }
+        return cuentaBancaria;
 
-        List<BusinessMessage> businessMessagesOrigen = validadorCCC.validarCCC(cccOrigen, cuentaBancariaOrigen);
-        if (!businessMessagesOrigen.isEmpty()) {
-            throw new BusinessException(businessMessagesOrigen);
-        }
-
-        List<BusinessMessage> businessMessagesDestino = validadorCCC.validarCCC(cccDestino, cuentaBancariaDestino);
-        if (!businessMessagesDestino.isEmpty()) {
-            throw new BusinessException(businessMessagesDestino);
-        }
-
-        if (transaccion.getPin() == null) {
-            throw new BusinessException("No se ha especificado un pin", "pin");
-        }
-        if (!(transaccion.getPin().equals(cuentaBancariaDestino.getPin()))) {
-            throw new BusinessException("Pin de la cuenta destino incorrecto", "pin");
-        }
-
-        MovimientoBancario movimientoBancarioCuentaOrigen = new MovimientoBancario();
-        movimientoBancarioCuentaOrigen.setFecha(new Date());
-        movimientoBancarioCuentaOrigen.setConcepto(transaccion.getConcepto());
-        movimientoBancarioCuentaOrigen.setTipo(Tipo.Debe);
-        movimientoBancarioCuentaOrigen.setImporte(transaccion.getImporte());
-        movimientoBancarioCuentaOrigen.setCuentaBancaria(cuentaBancariaOrigen);
-        movimientoBancarioService.insert(movimientoBancarioCuentaOrigen);
-
-        MovimientoBancario movimientoBancarioCuentaDestino = new MovimientoBancario();
-        movimientoBancarioCuentaDestino.setFecha(new Date());
-        movimientoBancarioCuentaDestino.setConcepto(transaccion.getConcepto());
-        movimientoBancarioCuentaDestino.setTipo(Tipo.Haber);
-        movimientoBancarioCuentaDestino.setImporte(transaccion.getImporte());
-        movimientoBancarioCuentaDestino.setCuentaBancaria(cuentaBancariaDestino);
-        movimientoBancarioService.insert(movimientoBancarioCuentaDestino);
     }
 
     @Override
@@ -189,25 +157,6 @@ public class CuentaBancariaServiceImpl extends GenericServiceImpl<CuentaBancaria
         return dc;
 
     }
-
-    @Override
-    public void retirarDinero(Pago pago, Tipo tipo) throws BusinessException {
-
-        CuentaBancaria cuentaBancaria = this.findByNumeroCuenta(pago.getCodigoCuentaCliente());
-
-        List<BusinessMessage> businessMessages = validadorCCC.validarCCC(pago.getCodigoCuentaCliente(), cuentaBancaria);
-        if (!businessMessages.isEmpty()) {
-            throw new BusinessException(businessMessages);
-        }
-
-        MovimientoBancario movimientoBancario = new MovimientoBancario();
-        movimientoBancario.setFecha(new Date());
-        movimientoBancario.setConcepto(pago.getConcepto());
-        movimientoBancario.setTipo(tipo);
-        movimientoBancario.setImporte(pago.getImporte());
-        movimientoBancario.setCuentaBancaria(cuentaBancaria);
-        movimientoBancarioService.insert(movimientoBancario);
-
-    }
+   
 
 }

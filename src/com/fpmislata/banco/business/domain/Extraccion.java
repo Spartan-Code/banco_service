@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  * @author Equipo
  */
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Pago implements Serializable {
+public class Extraccion implements Serializable {
 
     private String codigoCuentaCliente;
 
@@ -26,10 +26,10 @@ public class Pago implements Serializable {
 
     private String concepto;
 
-    public Pago() {
+    public Extraccion() {
     }
 
-    public Pago(String codigoCuentaCliente, String codigoEntidadBancaria, String pin, BigDecimal importe, String concepto) {
+    public Extraccion(String codigoCuentaCliente, String codigoEntidadBancaria, String pin, BigDecimal importe, String concepto) {
         this.codigoCuentaCliente = codigoCuentaCliente;
         this.codigoEntidadBancaria = codigoEntidadBancaria;
         this.pin = pin;
