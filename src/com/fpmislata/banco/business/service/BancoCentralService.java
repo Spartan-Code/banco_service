@@ -16,4 +16,5 @@ public interface BancoCentralService {
     
     CredencialesBancarias getURLbyCCC(String ccc)throws BusinessException;
     
+    CredencialesBancarias getURLbyCCCLocal(String ccc)throws BusinessException;
 }
