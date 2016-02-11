@@ -7,14 +7,15 @@ package com.fpmislata.banco.business.service;
 
 import com.fpmislata.banco.business.domain.CredencialesBancarias;
 import com.fpmislata.banco.core.BusinessException;
+import java.math.BigDecimal;
 
 /**
  *
- * @author Equipo
+ * @author German
  */
-public interface BancoCentralService {
+public interface PeticionRetirarDineroService {
     
-    CredencialesBancarias getURLbyCCC(String ccc)throws BusinessException;
     
-
+    void sendPeticionBancaria(CredencialesBancarias credencialesBancarias, String cccOrigen, String concepto, BigDecimal importe,String codigoEntidadBancaria)throws BusinessException;
+    
 }

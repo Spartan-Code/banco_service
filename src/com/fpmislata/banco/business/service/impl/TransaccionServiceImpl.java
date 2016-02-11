@@ -5,12 +5,15 @@
  */
 package com.fpmislata.banco.business.service.impl;
 
+import com.fpmislata.banco.business.domain.CredencialesBancarias;
 import com.fpmislata.banco.business.domain.CuentaBancaria;
 import com.fpmislata.banco.business.domain.MovimientoBancario;
 import com.fpmislata.banco.business.domain.Tipo;
 import com.fpmislata.banco.business.domain.Transaccion;
+import com.fpmislata.banco.business.service.BancoCentralService;
 import com.fpmislata.banco.business.service.CuentaBancariaService;
 import com.fpmislata.banco.business.service.MovimientoBancarioService;
+import com.fpmislata.banco.business.service.PeticionRetirarDineroService;
 import com.fpmislata.banco.business.service.TransaccionService;
 import com.fpmislata.banco.core.BusinessException;
 import java.math.BigDecimal;
@@ -29,10 +32,20 @@ public class TransaccionServiceImpl implements TransaccionService {
     @Autowired
     MovimientoBancarioService movimientoBancarioService;
 
+    @Autowired
+    BancoCentralService bancoCentralService;
+
+    @Autowired
+    PeticionRetirarDineroService peticionRetirarDineroService;
+
     @Override
     public void insert(Transaccion transaccion) throws BusinessException {
 
         CuentaBancaria cuentaBancariaDestino = cuentaBancariaService.findByCCC(transaccion.getCuentaDestino());
+
+        CredencialesBancarias credencialesBancarias = bancoCentralService.getURLbyCCC(transaccion.getCuentaOrigen());
+
+        peticionRetirarDineroService.sendPeticionBancaria(credencialesBancarias, transaccion.getCuentaOrigen(), transaccion.getConcepto(), transaccion.getImporte(), transaccion.getCuentaDestino().substring(0, 4));
 
         if (transaccion.getPin() == null) {
             throw new BusinessException("No se ha especificado un pin", "pin");

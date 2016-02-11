@@ -2,7 +2,9 @@
  <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="com.fpmislata.banco.business.domain.EntidadBancaria" table="entidadbancaria" >
-        <id  name="idEntidadBancaria" />
+        <id  name="idEntidadBancaria" type="integer"> 
+            <generator class="identity" />
+        </id>
         <property name="nombre" />
         <property name="codigoEntidad" unique="true" />
         <property name="fechaCreacion" />

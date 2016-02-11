@@ -16,4 +16,5 @@
     <bean class="com.fpmislata.banco.business.service.impl.TransaccionServiceImpl" />
     <bean class="com.fpmislata.banco.business.service.impl.RetirarServiceImpl" />
     <bean class="com.fpmislata.banco.business.service.impl.BancoCentralServiceImpl" />
+    <bean class="com.fpmislata.banco.business.service.impl.PeticionRetirarDineroServiceImpl" />
 </beans>
