@@ -14,7 +14,7 @@ import com.fpmislata.banco.core.BusinessException;
  */
 public interface BancoCentralService {
     
-    CredencialesBancarias getURLbyCCC(String ccc)throws BusinessException;
-    
+    CredencialesBancarias getURLByCCC(String ccc)throws BusinessException;
+    CredencialesBancarias getURLByCCCLocal(String ccc)throws BusinessException;
 
 }

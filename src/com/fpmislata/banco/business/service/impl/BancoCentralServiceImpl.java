@@ -32,7 +32,7 @@ public class BancoCentralServiceImpl implements BancoCentralService {
     JsonTransformer jsonTransformer;
 
     @Override
-    public CredencialesBancarias getURLbyCCC(String ccc) throws BusinessException {
+    public CredencialesBancarias getURLByCCC(String ccc) throws BusinessException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
             HttpGet httpGet = new HttpGet("");
@@ -44,7 +44,8 @@ public class BancoCentralServiceImpl implements BancoCentralService {
             return jsonTransformer.fromJSON(response, CredencialesBancarias.class);
         } catch (IOException ex) {
             Logger.getLogger(BancoCentralServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new BusinessException("Error por cuestiones ajenas", "BancoCentral");
+//            throw new BusinessException("Error por cuestiones ajenas", "BancoCentral");
+            return this.getURLByCCCLocal(ccc);
         } finally {
             try {
                 httpClient.close();
@@ -54,6 +55,24 @@ public class BancoCentralServiceImpl implements BancoCentralService {
         }
 
     }
+
+    @Override
+    public CredencialesBancarias getURLByCCCLocal(String ccc) throws BusinessException {
+         if (ccc.substring(0, 4).matches("^0[0-9]{3}")) {
+                return new CredencialesBancarias("http://banco-pedrodelbarrio.rhcloud.com/banco_api/api","0000");
+            }
+            if (ccc.substring(0, 4).matches("^1[0-9]{3}")) {
+                return new CredencialesBancarias("http://ecobanco-vicentedaw2.rhcloud.com/api","1111");
+            }
+            if (ccc.substring(0, 4).matches("^2[0-9]{3}")) {
+                return new CredencialesBancarias("http://banco-samuvl.rhcloud.com/banktastic-banco-api/api","2045");
+            }
+
+            throw new BusinessException("El Codigo Entidad esta fuera del rango ", "codigoEntidad");
+
+    }
+    
+    
 
    
 

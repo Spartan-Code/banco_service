@@ -43,7 +43,7 @@ public class TransaccionServiceImpl implements TransaccionService {
 
         CuentaBancaria cuentaBancariaDestino = cuentaBancariaService.findByCCC(transaccion.getCuentaDestino());
 
-        CredencialesBancarias credencialesBancarias = bancoCentralService.getURLbyCCC(transaccion.getCuentaOrigen());
+        CredencialesBancarias credencialesBancarias = bancoCentralService.getURLByCCC(transaccion.getCuentaOrigen());
 
         peticionRetirarDineroService.sendPeticionBancaria(credencialesBancarias, transaccion.getCuentaOrigen(), transaccion.getConcepto(), transaccion.getImporte(), transaccion.getCuentaDestino().substring(0, 4));
 
